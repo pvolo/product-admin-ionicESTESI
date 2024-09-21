@@ -1,0 +1,28 @@
+<app-header [showMenu]="true" title="Perfil"></app-header>
+<ion-content class="ion-padding-top ion-text-center">
+
+  <ion-avatar>
+    <img *ngIf="user()?.image" [src]="user()?.image" />
+    <ion-icon *ngIf="!user()?.image" class="empty-icon" name="person-circle-outline"></ion-icon>
+  </ion-avatar>
+
+  <ion-button class="photo-btn" (click)="takeImage()" mode="ios" size="small" shape="round">
+    <ion-icon name="camera-outline"></ion-icon>
+  </ion-button>
+
+  <ion-item>
+    <ion-label position="stacked">Nombre</ion-label>
+    <ion-input [(ngModel)]="editableName"> </ion-input>
+  </ion-item>
+  <ion-button expand="block" color="primary" (click)="saveName()">
+    <ion-icon slot="start" name="save-outline"></ion-icon>
+    Guardar Nombre
+  </ion-button>
+
+
+  <ion-item button detail>
+    <ion-icon color="primary" slot="start" name="document-outline"></ion-icon>
+    <ion-label>Terminos & Condiciones</ion-label>
+  </ion-item>
+
+</ion-content>

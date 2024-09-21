@@ -1,2 +1,22 @@
 // For information on how to create your own theme, please see:
 // http://ionicframework.com/docs/theming/
+// src/theme/variables.scss
+$primary-color: #3880ff;
+$secondary-color: #0cd1e8;
+$tertiary-color: #7044ff;
+$success-color: #10dc60;
+$warning-color: #ffce00;
+$danger-color: #f04141;
+$light-color: #f4f5f8;
+$dark-color: #222428;
+
+// Define font sizes
+$font-size-small: 12px;
+$font-size-medium: 16px;
+$font-size-large: 20px;
+
+
+// Colores del modo claro
+$background-color: #ffffff;
+$text-color: #000000;
+$header-background-color: #f0f0f0;
