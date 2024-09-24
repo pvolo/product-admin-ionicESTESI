@@ -11,12 +11,9 @@
 <ion-card mode="ios" color="secondary" class="d-flex-center ion-text-center" *ngIf="!loading && products.length">
   <div>
     <h5>{{products.length}}</h5>
-    <p>Productos</p>
+    <p>Conductores en Linea</p>
   </div>
-  <div>
-    <h5>{{getProfits() | currency:'USD'}}</h5>
-    <p>Ganancia Total</p>
-  </div>
+
 
 </ion-card>
 
@@ -35,14 +32,14 @@
           <img [src]="p.image" />
         </ion-avatar>
         <ion-label>
-          <div class="name">{{p.name}}</div>
-          <div class="data"> <strong>Precio:</strong>{{p.price | currency:'USD'}}
-          <br><strong>Unidades Vendidas:</strong>{{p.soldUnits}}
+          <div class="name"><strong style="color: red;">CONDUCTOR:</strong> {{p.name}}</div>
+          <div class="data"> <strong>PATENTE:</strong> <br> <strong>Salida:</strong> <br> <strong>Destino:</strong> <br> <strong>Hora Partida:</strong>
+          <br><strong>Asientos Disponibles:</strong>{{p.soldUnits}}
           </div>
-
+          
 
           <ion-chip color="primary" mode="ios" outline="true">
-            <ion-label>Ganancia: {{p.price * p.soldUnits | currency:'USD'}}</ion-label>
+            <ion-label>VALOR: {{p.price}}</ion-label>
           </ion-chip>
 
 
