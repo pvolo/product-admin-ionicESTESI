@@ -14,23 +14,25 @@
 
 <!--  Si no existe imagen -->
 <ion-icon class="image-icon" *ngIf="!form.value.image" name="image-outline"></ion-icon>
-
-
 <br>
+
 <!--  TOMAR/SELECCIONAR IMAGEN-->
 <ion-button (click)="takeImage()" mode="ios" size="small" shape="round">
       Tomar/Seleccionar
 </ion-button>
 
-
-
-
-
-<!-- NOMBRE-->
+<!-- Punto de salida-->
     <app-custom-input autocomplete="name" 
     [control]="form.controls.name"
     type="text"
-    label="Nombre"
+    label="Punto de salida"
+    ></app-custom-input>
+
+<!-- Punto de destino-->
+    <app-custom-input autocomplete="name" 
+    [control]="form.controls.name"
+    type="text"
+    label="Destino"
     ></app-custom-input>
     
 <!-- Validadores del Nombre-->
@@ -38,10 +40,6 @@
       <div *ngIf="form.controls.name.errors?.['required']"> Este Campo es Requerido </div>
       <div *ngIf="form.controls.name.errors?.['minLenght']">Al menos 4 Caracteres.</div>
     </div>
-
-
-
-
 
     <!-- Price-->
     <app-custom-input
@@ -54,9 +52,8 @@
 <!-- Validadores del Price-->
     <div class="validators" *ngIf="form.controls.price.errors && form.controls.price.touched">
       <div *ngIf="form.controls.price.errors?.['required']"> Este Campo es Requerido</div>
-      <div *ngIf="form.controls.price.errors?.['min']">Precio Minimo debe ser 0.</div>
+      <div *ngIf="form.controls.price.errors?.['min']">Precio Minimo no puede ser inferior a 1.</div>
     </div>
-
 
     <!-- Sold Units-->
     <app-custom-input
@@ -64,17 +61,17 @@
     type="number"
     label="Asientos Disponibles"
     (ionInput)="setNumberInputs()"
-
     ></app-custom-input>
     
 <!-- Validadores del S.U-->
+
     <div class="validators" *ngIf="form.controls.soldUnits.errors && form.controls.soldUnits.touched">
       <div *ngIf="form.controls.soldUnits.errors?.['required']"> Este Campo es Requerido</div>
-      <div *ngIf="form.controls.soldUnits.errors?.['min']">Cantidad Minima debe ser 0.</div>
+      <div *ngIf="form.controls.soldUnits.errors?.['min']">Cantidad Minima no puede ser inferior a 1.</div>
     </div>    
 
     <ion-button   mode="ios" class="ion-margin" type="submit" [disabled]="form.invalid">
-     {{ product ? 'Actualizar Viaje': 'Agregar Viaje'}}
+    {{ product ? 'Actualizar Viaje': 'Agregar Viaje'}}
       <ion-icon slot="end" name="checkmark-circle-outline"></ion-icon>
     </ion-button>
 
