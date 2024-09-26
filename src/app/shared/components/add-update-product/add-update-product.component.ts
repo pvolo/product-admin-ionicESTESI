@@ -49,7 +49,7 @@ export class AddUpdateProductComponent  implements OnInit {
 
 //===========TOMAR/SELECCIONAR UNA FOTO
 async takeImage(){
-  const dataUrl= (await this.utilsSvc.takePicture('Imagen del Producto')).dataUrl;
+  const dataUrl= (await this.utilsSvc.takePicture('Imagen del Viaje')).dataUrl;
   this.form.controls.image.setValue(dataUrl);
 
 }
@@ -99,7 +99,7 @@ setNumberInputs(){
         this.utilsSvc.dismissModal({success:true});
 
         this.utilsSvc.presentToast({
-          message:'Producto Añadido Exitosamente',
+          message:'Viaje Añadido Exitosamente',
           duration: 2000,
           color:'success',
           position:'middle',
@@ -153,7 +153,7 @@ async updateProduct() {
     this.utilsSvc.dismissModal({success:true});
 
     this.utilsSvc.presentToast({
-      message:'Producto Actualizado Exitosamente',
+      message:'Viaje Actualizado Exitosamente',
       duration: 2000,
       color:'success',
       position:'middle',
