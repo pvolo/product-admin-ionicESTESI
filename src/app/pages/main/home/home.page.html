@@ -9,7 +9,7 @@
 <ion-card mode="ios" color="secondary" class="d-flex-center ion-text-center" *ngIf="!loading && products.length">
   <div>
     <h5>{{products.length}}</h5>
-    <p>Conductores en Linea</p>
+    <p>Viajes Disponibles</p>
   </div>
 </ion-card>
 
@@ -23,7 +23,7 @@
         </ion-avatar>
         <ion-label>
           <div class="name"><strong style="color: rgb(4, 138, 98);">CONDUCTOR:</strong>{{user()?.name}}</div>
-          <div class="data"> <strong>PATENTE:</strong> <br> <strong>Salida: {{ p.name}}</strong> <br> <strong>Destino:</strong> <br> <strong>Hora Partida:</strong>
+          <div class="data"> <strong>PATENTE:</strong> <br> <strong>Salida:{{ p.subname}} </strong> <br> <strong>Destino:{{ p.name}}</strong> <br> <strong>Hora Partida:</strong>
           <br><strong>Asientos Disponibles:</strong>{{p.soldUnits}}
           </div>
           <ion-chip color="primary" mode="ios" outline="true">
