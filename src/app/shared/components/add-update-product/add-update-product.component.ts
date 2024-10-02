@@ -9,6 +9,7 @@ import { UtilsService } from 'src/app/services/utils.service';
   selector: 'app-add-update-product',
   templateUrl: './add-update-product.component.html',
   styleUrls: ['./add-update-product.component.scss'],
+  
 })
 export class AddUpdateProductComponent  implements OnInit {
 
@@ -24,6 +25,8 @@ export class AddUpdateProductComponent  implements OnInit {
     subname: new FormControl('',[Validators.required, Validators.minLength(4)]),
     price: new FormControl(null,[Validators.required, Validators.min(1)]),
     soldUnits: new FormControl(null,[Validators.required, Validators.min(1)]),
+    departureTime: new FormControl('', [Validators.required]), 
+
     
 
 

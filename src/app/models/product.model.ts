@@ -6,7 +6,8 @@ export interface Product{
         name: string,
         subname: string,
         soldUnits: number,
-        id: string
+        id: string,
+        departureTime: string;
     
 
 
