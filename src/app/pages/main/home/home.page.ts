@@ -103,7 +103,7 @@ return this.products.reduce((index,product)=>index + product.price * product.sol
 async confirmDeleteProduct(product:Product) {
   this.utilsSvc.presentAlert({
     header: 'Eliminar!',
-    message: '¿Quieres Eliminar El Producto?',
+    message: '¿Quieres Cancelar El Viaje?',
     mode:'ios',
     buttons: [
       {
@@ -142,7 +142,7 @@ async confirmDeleteProduct(product:Product) {
       this.products=this.products.filter(p=>p.id!=product.id)
   
       this.utilsSvc.presentToast({
-        message:'Producto Eliminado Exitosamente',
+        message:'Viaje Eliminado Exitosamente',
         duration: 2000,
         color:'success',
         position:'middle',
