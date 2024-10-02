@@ -70,6 +70,17 @@
       <div *ngIf="form.controls.soldUnits.errors?.['min']">Cantidad Minima no puede ser inferior a 1.</div>
     </div>    
 
+    <!-- Hora de salida -->
+    <ion-item>
+      <ion-label>Hora de salida</ion-label>
+      <ion-datetime
+        presentation="time" 
+        displayFormat="h:mm A"
+        pickerFormat="h:mm A"
+        formControlName="departureTime">
+      </ion-datetime>
+    </ion-item>
+
     <ion-button   mode="ios" class="ion-margin" type="submit" [disabled]="form.invalid">
     {{ product ? 'Actualizar Viaje': 'Agregar Viaje'}}
       <ion-icon slot="end" name="checkmark-circle-outline"></ion-icon>
