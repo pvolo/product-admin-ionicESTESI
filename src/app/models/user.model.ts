@@ -4,6 +4,5 @@ export interface User{
     password:string,
     name:string,
     image:string,
-    lastNameChange?: Date; 
 
 }

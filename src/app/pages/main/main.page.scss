@@ -1,5 +1,5 @@
 ion-content{
-    --background:var(--ion-color-primary);
+    --background:var(--ion-color-secondary);
     --color:var(--ion-color-primary-contrast);
     --padding-top:20px;
 
@@ -8,7 +8,7 @@ ion-content{
 ion-item{
     font-size:14px;
     color:var(--ion-color-light);
-    --background: var(--ion-color-primary);
+    --background: var(--ion-color-secondary);
 
     ion-icon{
         color:var(--ion-color-light);

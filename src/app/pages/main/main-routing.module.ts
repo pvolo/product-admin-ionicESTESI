@@ -15,12 +15,14 @@ const routes: Routes = [
       {
         path: 'profile',
         loadChildren: () => import('./profile/profile.module').then( m => m.ProfilePageModule)
-      }
+      },
+      {
+        path: 'historial',
+        loadChildren: () => import('./historial/historial.module').then( m => m.HistorialPageModule)
+      },
     ]
-  },  {
-    path: 'historial',
-    loadChildren: () => import('./historial/historial.module').then( m => m.HistorialPageModule)
   },
+
 
 
 

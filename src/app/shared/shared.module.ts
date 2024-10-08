@@ -6,12 +6,13 @@ import { LogoComponent } from './components/logo/logo.component';
 import { IonicModule } from '@ionic/angular';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AddUpdateProductComponent } from './components/add-update-product/add-update-product.component';
+import { MapComponent } from './components/map/map.component';
 
 
 
 @NgModule({
-  declarations: [HeaderComponent,CustomInputComponent,LogoComponent,AddUpdateProductComponent],
-  exports:[HeaderComponent,CustomInputComponent,LogoComponent,AddUpdateProductComponent,ReactiveFormsModule,],
+  declarations: [HeaderComponent,CustomInputComponent,LogoComponent,AddUpdateProductComponent,MapComponent],
+  exports:[HeaderComponent,CustomInputComponent,LogoComponent,AddUpdateProductComponent,MapComponent,ReactiveFormsModule],
   imports: [
     CommonModule,
     IonicModule,
