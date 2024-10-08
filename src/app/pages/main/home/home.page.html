@@ -1,4 +1,4 @@
-<app-header [showMenu]="true" title="Inicio"></app-header>
+<app-header [showMenu]="true" title="Conductor"></app-header>
 
 <ion-content>
 
@@ -8,8 +8,11 @@
 
 <ion-card mode="ios" color="secondary" class="d-flex-center ion-text-center" *ngIf="!loading && products.length">
   <div>
-    <h5>{{products.length}}</h5>
-    <p>Viajes Disponibles</p>
+    <h5>Viajes Agregados: {{products.length}}</h5>
+    <h5>Ganancia Esperada <br>
+       {{getProfits()}}</h5>
+
+    
   </div>
 </ion-card>
 
@@ -69,7 +72,7 @@
 
   <div *ngIf="!loading && !products.length" class="empty">
     <ion-icon  name="car-outline"></ion-icon>
-    <h3>No hay viajes disponibles!</h3>
+    <h3>No hay viajes añadidos!</h3>
   </div>
 
 <!------------   AGREGAR PRODUCTO   ----------->

@@ -63,6 +63,7 @@ export class ProfilePage implements OnInit {
   //===========GUARDAR EL NOMBRE EDITADO
   async saveName() {
     if (!this.editableName.trim()) {
+      // Mostrar un mensaje de error si el campo está vacío
       this.utilsSvc.presentToast({
         message: 'El nombre no puede estar vacío.',
         duration: 2500,
@@ -72,9 +73,11 @@ export class ProfilePage implements OnInit {
       });
       return; // No continuar con la actualización
     }
-  
+
+    // Validar que el nombre solo contenga letras
     const namePattern = /^[a-zA-Z\s]+$/;
     if (!namePattern.test(this.editableName)) {
+      // Mostrar un mensaje de error si el nombre contiene caracteres no permitidos
       this.utilsSvc.presentToast({
         message: 'El nombre solo puede contener letras y espacios.',
         duration: 2500,
@@ -84,37 +87,17 @@ export class ProfilePage implements OnInit {
       });
       return; // No continuar con la actualización
     }
-  
+
     let user = this.user();
     let path = `users/${user.uid}`;
-  
-    // Verificar si han pasado 30 días desde el último cambio
-    const now = new Date();
-    const lastChangeDate = user.lastNameChange ? new Date(user.lastNameChange) : null;
-    const diffTime = now.getTime() - (lastChangeDate ? lastChangeDate.getTime() : 0);
-    const diffDays = diffTime / (1000 * 3600 * 24);
-  
-    if (lastChangeDate && diffDays < 30) {
-      const daysLeft = Math.ceil(30 - diffDays);
-      this.utilsSvc.presentToast({
-        message: `Debes esperar ${daysLeft} días para cambiar tu nombre nuevamente.`,
-        duration: 2500,
-        color: 'danger',
-        position: 'middle',
-        icon: 'alert-circle-outline'
-      });
-      return; // No continuar con la actualización
-    }
-  
     user.name = this.editableName;
-    user.lastNameChange = now; // Actualizar la fecha de cambio
-  
+
     const loading = await this.utilsSvc.loading();
     await loading.present();
-  
-    this.firebaseSvc.updateDocument(path, { name: user.name, lastNameChange: user.lastNameChange }).then(async res => {
+
+    this.firebaseSvc.updateDocument(path, { name: user.name }).then(async res => {
       this.utilsSvc.saveInLocalStorage('user', user);
-  
+
       this.utilsSvc.presentToast({
         message: 'Nombre Actualizado Exitosamente',
         duration: 2000,
@@ -124,7 +107,7 @@ export class ProfilePage implements OnInit {
       });
     }).catch(error => {
       console.log(error);
-  
+
       this.utilsSvc.presentToast({
         message: error.message,
         duration: 2500,
@@ -137,3 +120,4 @@ export class ProfilePage implements OnInit {
     });
   }
 }
+
