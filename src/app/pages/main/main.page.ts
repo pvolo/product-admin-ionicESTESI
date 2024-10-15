@@ -12,9 +12,11 @@ import { UtilsService } from 'src/app/services/utils.service';
 export class MainPage implements OnInit {
 
   pages = [
-    {title:'Inicio', url:'/main/home',icon:'home-outline'},
+    {title:'Agregar', url:'/main/home',icon:'add-circle'},
+    {title:'Tomar', url:'/main/takecar',icon:'bus'},
     {title:'Perfil', url:'/main/profile',icon:'person-outline'},
     {title:'Historial', url:'/main/historial',icon:'time-outline'},
+
 
 
   ]

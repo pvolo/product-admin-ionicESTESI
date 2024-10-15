@@ -63,7 +63,6 @@ export class ProfilePage implements OnInit {
   //===========GUARDAR EL NOMBRE EDITADO
   async saveName() {
     if (!this.editableName.trim()) {
-      // Mostrar un mensaje de error si el campo está vacío
       this.utilsSvc.presentToast({
         message: 'El nombre no puede estar vacío.',
         duration: 2500,
@@ -71,13 +70,12 @@ export class ProfilePage implements OnInit {
         position: 'middle',
         icon: 'alert-circle-outline'
       });
-      return; // No continuar con la actualización
+      return; 
     }
 
     // Validar que el nombre solo contenga letras
     const namePattern = /^[a-zA-Z\s]+$/;
     if (!namePattern.test(this.editableName)) {
-      // Mostrar un mensaje de error si el nombre contiene caracteres no permitidos
       this.utilsSvc.presentToast({
         message: 'El nombre solo puede contener letras y espacios.',
         duration: 2500,

@@ -23,6 +23,7 @@ export class AddUpdateProductComponent  implements OnInit {
     image: new FormControl('',[Validators.required]),
     name: new FormControl('',[Validators.required, Validators.minLength(4)]),
     subname: new FormControl('',[Validators.required, Validators.minLength(4)]),
+    patente: new FormControl('',[Validators.required, Validators.minLength(7)]),
     price: new FormControl(null,[Validators.required, Validators.min(1)]),
     soldUnits: new FormControl(null,[Validators.required, Validators.min(1)]),
     departureTime: new FormControl('', [Validators.required]), 

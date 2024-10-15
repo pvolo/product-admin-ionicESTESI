@@ -20,8 +20,14 @@ const routes: Routes = [
         path: 'historial',
         loadChildren: () => import('./historial/historial.module').then( m => m.HistorialPageModule)
       },
+      {
+        path: 'takecar',
+        loadChildren: () => import('./takecar/takecar.module').then( m => m.TakecarPageModule)
+      },
     ]
   },
+
+
 
 
 
