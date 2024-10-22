@@ -1,0 +1,24 @@
+.mapboxgl-ctrl-bottom-left,
+.mapboxgl-ctrl-bottom-right,
+.mapboxgl-ctrl-group {
+  display: none !important; /* Oculta los botones innecesarios */
+}
+
+.mapbox-directions-component-keyline {
+  display: none; /* Oculta la línea separadora */
+}
+
+.mapbox-directions-steps {
+  display: none; /* Oculta las instrucciones paso a paso */
+}
+
+.mapbox-directions-route-summary {
+  font-size: 16px; /* Ajusta el tamaño de la fuente del resumen de distancia/tiempo */
+  font-weight: bold;
+  text-align: center;
+}
+
+/* Asegúrate de que el mapa y la ruta se muestren de manera prominente */
+.mapboxgl-map {
+  height: 100%;  /* Utiliza toda la altura disponible */
+}
