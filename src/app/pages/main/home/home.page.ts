@@ -5,6 +5,7 @@ import { FirebaseService } from 'src/app/services/firebase.service';
 import { UtilsService } from 'src/app/services/utils.service';
 import { AddUpdateProductComponent } from 'src/app/shared/components/add-update-product/add-update-product.component';
 import { orderBy,where } from 'firebase/firestore';
+import { Router } from '@angular/router'; // Importar Router
 
 @Component({
   selector: 'app-home',
@@ -14,6 +15,7 @@ import { orderBy,where } from 'firebase/firestore';
 export class HomePage implements OnInit {
   fireBaseSvs = inject(FirebaseService);
   utilsSvc = inject(UtilsService);
+  router = inject(Router); // Inyectar Router
 
   products:Product[] = [];
   loading:boolean=false;

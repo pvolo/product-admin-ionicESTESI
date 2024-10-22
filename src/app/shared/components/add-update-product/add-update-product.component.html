@@ -18,8 +18,17 @@
 
 <!--  TOMAR/SELECCIONAR IMAGEN-->
 <ion-button (click)="takeImage()" mode="ios" size="small" shape="round">
-      Tomar/Seleccionar
+  <br>  Tomar/Seleccionar <br> <br>
 </ion-button>
+
+
+
+<!--MARCAR UBICACIONES-->
+<ion-item button detail (click)="irAMap()">
+  <ion-icon color="primary" slot="start" name="pin-outline"></ion-icon>
+  <ion-label>Marcar Ubicaciones </ion-label>
+</ion-item>
+
 
 
 <!--PATENTE-->
@@ -28,11 +37,6 @@
 type="text"
 label="Patente Vehiculo"
 ></app-custom-input>
-
-
-
-
-
 
 <!-- Punto de salida-->
     <app-custom-input autocomplete="subname" 

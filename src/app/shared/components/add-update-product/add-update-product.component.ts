@@ -4,6 +4,7 @@ import { Product } from 'src/app/models/product.model';
 import { User } from 'src/app/models/user.model';
 import { FirebaseService } from 'src/app/services/firebase.service';
 import { UtilsService } from 'src/app/services/utils.service';
+import { Router } from '@angular/router'; // Importar Router
 
 @Component({
   selector: 'app-add-update-product',
@@ -39,6 +40,7 @@ export class AddUpdateProductComponent  implements OnInit {
   
     firebaseSvc= inject(FirebaseService);
     utilsSvc= inject(UtilsService);
+    router = inject(Router); // Inyectar Router
 
     user = {} as User;
 
@@ -181,5 +183,12 @@ async updateProduct() {
   })
 
 }
+
+
+// Método para redirigir a la página de mapa
+irAMap() {
+  this.router.navigate(['/map']); // Cambia '/map' por la ruta correspondiente a tu página de mapa
 }
+}
+
 
