@@ -1,3 +1,29 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 16px;
+  height: 100%;
+}
+
+.form-container {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+ion-input {
+  flex: 1;
+  margin-right: 10px;
+}
+
+.map-container {
+  width: 100%;
+  height: calc(100% - 80px); /* Resta altura del header y form-container */
+}
+
 .mapboxgl-ctrl-bottom-left,
 .mapboxgl-ctrl-bottom-right,
 .mapboxgl-ctrl-group {
@@ -13,12 +39,11 @@
 }
 
 .mapbox-directions-route-summary {
-  font-size: 16px; /* Ajusta el tamaño de la fuente del resumen de distancia/tiempo */
+  font-size: 16px;
   font-weight: bold;
   text-align: center;
 }
 
-/* Asegúrate de que el mapa y la ruta se muestren de manera prominente */
 .mapboxgl-map {
-  height: 100%;  /* Utiliza toda la altura disponible */
+  height: 100%; /* Utiliza toda la altura disponible */
 }

@@ -31,7 +31,8 @@
                 "output": "./svg"
               }
             ],
-            "styles": ["src/global.scss", "src/theme/variables.scss"],
+            "styles": ["src/global.scss", "src/theme/variables.scss", "https://api.mapbox.com/mapbox-gl-js/v2.8.1/mapbox-gl.css"
+          ],
             "scripts": []
           },
           "configurations": {
