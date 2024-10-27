@@ -3,6 +3,7 @@ import * as mapboxgl from 'mapbox-gl';
 import { MapService } from '../../services/map.service';
 import MapboxDirections from '@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { Router } from '@angular/router'; // Importa Router
 
 @Component({
   selector: 'app-map',
@@ -14,7 +15,8 @@ export class MapPage implements OnInit {
   directions: MapboxDirections;
   routeName: string = ''; // To store the name of the route entered by the user
 
-  constructor(private mapService: MapService, private afAuth: AngularFireAuth) {}
+  constructor(private mapService: MapService, private afAuth: AngularFireAuth,    private router: Router 
+  ) {}
 
   ngOnInit() {
     this.initializeMap();
@@ -78,5 +80,9 @@ export class MapPage implements OnInit {
         alert('Error al guardar la ubicación.');
       });
     });
+  }
+  // Método para redirigir al inicio
+  volverAlInicio() {
+    this.router.navigate(['./main/home']);
   }
 }

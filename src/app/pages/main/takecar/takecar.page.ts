@@ -5,6 +5,7 @@ import { User } from 'src/app/models/user.model';
 import { FirebaseService } from 'src/app/services/firebase.service';
 import { UtilsService } from 'src/app/services/utils.service';
 import { AddUpdateProductComponent } from 'src/app/shared/components/add-update-product/add-update-product.component';
+import { ReserveComponent } from 'src/app/shared/components/reserve/reserve.component';
 
 @Component({
   selector: 'app-takecar',
@@ -15,17 +16,12 @@ export class TakecarPage implements OnInit {
   firebaseSvc = inject(FirebaseService);
   utilsSvc = inject(UtilsService);
 
+  products: Product[] = [];
+  loading = false;
 
-  products:Product[] = [];
-  loading:boolean=false;
+  ngOnInit() {}
 
-
-
-
-  ngOnInit() {
-  }
-
-  user():User{
+  user(): User {
     return this.utilsSvc.getFromLocalStorage('user');
   }
 
@@ -33,62 +29,41 @@ export class TakecarPage implements OnInit {
     this.getProducts();
   }
 
+  doRefresh(event) {  
+    setTimeout(() => {
+      this.getProducts();
+      event.target.complete();
+    }, 1000);
+  }
 
-doRefresh(event) {  
-  setTimeout(() => {
-  this.getProducts();
-  event.target.complete();
-  }, 1000);
-}
-
-
-  //====Obtener las Ganancias
-getProfits(){
-return this.products.reduce((index,product)=>index + product.price * product.soldUnits, 0)
-
-}
-
-
-  //====Obtener los Productos
-  getProducts(){
+  getProducts() {
     let path = `users/${this.user().uid}/products`;
+    this.loading = true;
+    let query = [orderBy('soldUnits', 'desc')];
 
-    this.loading=true;
-
-    let query = [
-    orderBy('soldUnits','desc'),
-  ]
-
-
-
-    
-
-    let sub = this.firebaseSvc.getCollectionData(path,query).subscribe({
-      next:(res:any) => {
-        console.log(res);
+    let sub = this.firebaseSvc.getCollectionData(path, query).subscribe({
+      next: (res: any) => {
         this.products = res;
-
-        this.loading=false;
+        this.loading = false;
         sub.unsubscribe();
       }
-    })
+    });
   }
 
-
-
-
-  //====Agregar o Actualizar Producto
-  async addUpdateProduct(product?: Product){
-
-  let success = await  this.utilsSvc.presentModal({
-      component:AddUpdateProductComponent,
-      cssClass:'add-update-modal',
-      componentProps:{ product }
-    })
-
-    if(success)this.getProducts();
+  async addUpdateProduct(product?: Product) {
+    let success = await this.utilsSvc.presentModal({
+      component: AddUpdateProductComponent,
+      cssClass: 'add-update-modal',
+      componentProps: { product }
+    });
+    if (success) this.getProducts();
   }
 
-
-
+  async reserveProduct(product: Product) {
+    let success = await this.utilsSvc.presentModal({
+      component: ReserveComponent,
+      componentProps: { product }
+    });
+    if (success) this.getProducts();
+  }
 }
