@@ -1,6 +1,14 @@
-<app-header [showMenu]="true" title="MARCAR PUNTOS"></app-header>
-
+<app-header title="MARCAR PUNTOS"></app-header>
 
 <ion-content>
-  <div id="map" style="width: 100%; height: 100%;"></div> <!-- Contenedor del mapa -->
+  <div class="container">
+    <div class="form-container">
+      <ion-input placeholder="Nombre de la Ruta" [(ngModel)]="routeName"></ion-input>
+      <ion-button (click)="saveRoute()">Guardar Ubicación</ion-button>
+    </div>
+    <div id="map" class="map-container"></div> <!-- Contenedor del mapa -->
+  </div>
+  <ion-footer>
+    <ion-button expand="full" (click)="volverAlInicio()">Volver</ion-button>
+  </ion-footer>
 </ion-content>
