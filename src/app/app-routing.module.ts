@@ -22,6 +22,11 @@ const routes: Routes = [
     path: 'map',
     loadChildren: () => import('./pages/map/map.module').then( m => m.MapPageModule),canActivate:[AuthGuard]
   },
+  {
+    path: 'personal-data',
+    loadChildren: () => import('./pages/personal-data/personal-data.module').then( m => m.PersonalDataPageModule),canActivate:[AuthGuard]
+  },
+
 
 ];
 

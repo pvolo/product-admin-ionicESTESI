@@ -1,4 +1,5 @@
-import { Component, Inject, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { User } from 'src/app/models/user.model';
 import { FirebaseService } from 'src/app/services/firebase.service';
 import { UtilsService } from 'src/app/services/utils.service';
@@ -9,14 +10,24 @@ import { UtilsService } from 'src/app/services/utils.service';
   styleUrls: ['./profile.page.scss'],
 })
 export class ProfilePage implements OnInit {
-
   firebaseSvc = inject(FirebaseService);
   utilsSvc = inject(UtilsService);
+  router = inject(Router);
   editableName: string;
 
   ngOnInit() {
-    this.editableName = this.user().name; // Inicializar el nombre editable
+    this.editableName = this.user().name;
   }
+
+  User(): User {
+    return this.utilsSvc.getFromLocalStorage('user');
+  }
+
+  // Redirigir a la página de datos personales
+  goToPersonalData() {
+    this.router.navigate(['../personal-data']);
+  }
+
 
   user(): User {
     return this.utilsSvc.getFromLocalStorage('user');
