@@ -14,24 +14,33 @@ export class ProfilePage implements OnInit {
   utilsSvc = inject(UtilsService);
   router = inject(Router);
   editableName: string;
+  showAddPersonalData: boolean = true;
+
+  isNameChanged: boolean = false;
 
   ngOnInit() {
-    this.editableName = this.user().name;
+    const user = this.user();
+    if (user) {
+      this.editableName = user.name;
+      this.showAddPersonalData = !(user.rut && user.birthdate);
+    }
   }
-
-  User(): User {
-    return this.utilsSvc.getFromLocalStorage('user');
-  }
-
-  // Redirigir a la página de datos personales
-  goToPersonalData() {
-    this.router.navigate(['../personal-data']);
-  }
-
 
   user(): User {
     return this.utilsSvc.getFromLocalStorage('user');
   }
+
+  goToPersonalData() {
+    this.router.navigate(['../personal-data']);
+  }
+
+  onNameChange() {
+    const originalName = this.user().name;
+this.isNameChanged = this.editableName.trim() !== originalName.trim() &&
+this.editableName.length > 0 && 
+this.editableName.length <= 15 &&
+ !/\s/.test(this.editableName);
+}
 
   //===========TOMAR/SELECCIONAR UNA FOTO
   async takeImage() {
@@ -58,7 +67,6 @@ export class ProfilePage implements OnInit {
       });
     }).catch(error => {
       console.log(error);
-
       this.utilsSvc.presentToast({
         message: error.message,
         duration: 2500,
@@ -84,49 +92,47 @@ export class ProfilePage implements OnInit {
       return; 
     }
 
-    // Validar que el nombre solo contenga letras
-    const namePattern = /^[a-zA-Z\s]+$/;
-    if (!namePattern.test(this.editableName)) {
-      this.utilsSvc.presentToast({
-        message: 'El nombre solo puede contener letras y espacios.',
-        duration: 2500,
-        color: 'danger',
-        position: 'middle',
-        icon: 'alert-circle-outline'
-      });
-      return; // No continuar con la actualización
-    }
-
-    let user = this.user();
-    let path = `users/${user.uid}`;
-    user.name = this.editableName;
-
-    const loading = await this.utilsSvc.loading();
-    await loading.present();
-
-    this.firebaseSvc.updateDocument(path, { name: user.name }).then(async res => {
-      this.utilsSvc.saveInLocalStorage('user', user);
-
-      this.utilsSvc.presentToast({
-        message: 'Nombre Actualizado Exitosamente',
-        duration: 2000,
-        color: 'success',
-        position: 'middle',
-        icon: 'checkmark-circle-outline'
-      });
-    }).catch(error => {
-      console.log(error);
-
-      this.utilsSvc.presentToast({
-        message: error.message,
-        duration: 2500,
-        color: 'primary',
-        position: 'middle',
-        icon: 'alert-circle-outline'
-      });
-    }).finally(() => {
-      loading.dismiss();
-    });
-  }
+// Validar que el nombre solo contenga letras y no espacios
+if (!/^[a-zA-Z]{1,15}$/.test(this.editableName)) {
+  this.utilsSvc.presentToast({
+    message: 'El nombre debe contener solo letras y un máximo de 15 caracteres sin espacios.',
+    duration: 2500,
+    color: 'danger',
+    position: 'middle',
+    icon: 'alert-circle-outline'
+  });
+  return; 
 }
 
+let user = this.user();
+let path = `users/${user.uid}`;
+user.name = this.editableName;
+
+const loading = await this.utilsSvc.loading();
+await loading.present();
+
+this.firebaseSvc.updateDocument(path, { name: user.name }).then(async res => {
+  this.utilsSvc.saveInLocalStorage('user', user);
+  this.isNameChanged = false; 
+
+  this.utilsSvc.presentToast({
+    message: 'Nombre Actualizado Exitosamente',
+    duration: 2000,
+    color: 'success',
+    position: 'middle',
+    icon: 'checkmark-circle-outline'
+  });
+}).catch(error => {
+  console.log(error);
+  this.utilsSvc.presentToast({
+    message: error.message,
+    duration: 2500,
+    color: 'primary',
+    position: 'middle',
+    icon: 'alert-circle-outline'
+  });
+}).finally(() => {
+  loading.dismiss();
+});
+}
+}
