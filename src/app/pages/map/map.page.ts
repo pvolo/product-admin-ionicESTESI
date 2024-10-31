@@ -13,7 +13,7 @@ import { Router } from '@angular/router'; // Importa Router
 export class MapPage implements OnInit {
   map: mapboxgl.Map;
   directions: MapboxDirections;
-  routeName: string = ''; // To store the name of the route entered by the user
+  routeName: string = ''; 
 
   constructor(private mapService: MapService, private afAuth: AngularFireAuth,    private router: Router 
   ) {}
@@ -23,12 +23,11 @@ export class MapPage implements OnInit {
   }
 
   initializeMap() {
-    // Initialize the map
     this.map = new mapboxgl.Map({
-      container: 'map', // Container ID
+      container: 'map',
       style: 'mapbox://styles/mapbox/streets-v11',
-      center: [-73.0503, -36.8270], // Initial coordinates
-      zoom: 13, // Initial zoom level
+      center: [-73.0503, -36.8270], 
+      zoom: 13, 
     });
 
     this.configureDirections();
@@ -38,19 +37,17 @@ export class MapPage implements OnInit {
     this.directions = new MapboxDirections({
       accessToken: (mapboxgl as any).accessToken,
       unit: 'metric',
-      profile: 'mapbox/driving', // Driving profile only
+      profile: 'mapbox/driving', 
       controls: {
-        instructions: false, // Show route instructions
-        profileSwitcher: false, // Disable profile switcher
+        instructions: false, 
+        profileSwitcher: false, 
       },
     });
 
-    // Add the directions control to the map
     this.map.addControl(this.directions, 'top-left');
 
-    // Set default locations if desired
-    this.directions.setOrigin([-73.05313, -36.82892]); // Point A
-    this.directions.setDestination([-73.04352, -36.82885]); // Point B
+    this.directions.setOrigin([-73.05313, -36.82892]); 
+    this.directions.setDestination([-73.04352, -36.82885]); 
   }
 
   saveRoute() {
@@ -60,7 +57,6 @@ export class MapPage implements OnInit {
         return;
       }
   
-      // Continuar con el guardado
       if (!this.routeName.trim()) {
         alert('Por favor, ingrese un nombre para la ruta.');
         return;
@@ -81,7 +77,6 @@ export class MapPage implements OnInit {
       });
     });
   }
-  // Método para redirigir al inicio
   volverAlInicio() {
     this.router.navigate(['./main/home']);
   }

@@ -12,18 +12,26 @@
 
   <ion-item>
     <ion-label position="stacked">Nombre</ion-label>
-    
-    <ion-input [(ngModel)]="editableName"> </ion-input>
+    <ion-input [(ngModel)]="editableName" (ngModelChange)="onNameChange()"></ion-input>
   </ion-item>
-  <ion-button expand="block" color="primary" (click)="saveName()">
+  <ion-button expand="block" color="primary" (click)="saveName()" *ngIf="isNameChanged">
     <ion-icon slot="start" name="save-outline"></ion-icon>
     Guardar Nombre
   </ion-button>
 
 
-  <ion-item button detail (click)="goToPersonalData()">
+  <ion-item *ngIf="showAddPersonalData" button detail (click)="goToPersonalData()">
     <ion-icon color="primary" slot="start" name="document-outline"></ion-icon>
     <ion-label>Añadir Datos Personales</ion-label>
   </ion-item>
 
+  <ion-item *ngIf="user()?.rut">
+    <ion-label position="stacked">RUN</ion-label>
+    <ion-text>{{ user()?.rut }}</ion-text>
+  </ion-item>
+
+  <ion-item *ngIf="user()?.birthdate">
+    <ion-label position="stacked">Fecha de Nacimiento</ion-label>
+    <ion-text>{{ user()?.birthdate }}</ion-text>
+  </ion-item>
 </ion-content>
