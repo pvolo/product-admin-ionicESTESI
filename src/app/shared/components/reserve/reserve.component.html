@@ -1,16 +1,19 @@
-<ion-card *ngIf="product">
-  <ion-card-header>
-    <ion-card-title>Reservar Asientos</ion-card-title>
+<ion-card *ngIf="product" class="reservar-asientos-card">
+  <ion-card-header class="card-header">
+    <ion-card-title class="card-title">Reservar Asientos</ion-card-title>
   </ion-card-header>
-  <ion-card-content>
+  <ion-card-content class="card-content">
     <form [formGroup]="form" (ngSubmit)="reserveSeats()">
-      <ion-item>
-        <ion-label position="floating">Asientos a Reservar</ion-label>
-        <ion-input type="number" formControlName="seats"></ion-input>
+      <ion-item class="form-item">
+        <ion-label position="floating">Asientos a Reservar <br></ion-label> <br>
+        <ion-input type="number" formControlName="seats" class="input-field" placeholder="Ingrese el número de asientos"></ion-input>
       </ion-item>
-      <ion-button expand="full" type="submit" [disabled]="form.invalid">
+      <ion-button expand="full" type="submit" [disabled]="form.invalid" class="submit-button">
         Reservar
       </ion-button>
     </form>
+    <ion-buttons slot="center" class="close-buttons">
+      <ion-button (click)="cerrarModal()" class="close-button">Cerrar</ion-button>
+    </ion-buttons>
   </ion-card-content>
 </ion-card>

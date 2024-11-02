@@ -1,0 +1,78 @@
+.reservar-asientos-card {
+    background-color: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s, box-shadow 0.2s;
+  
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+    }
+  }
+  
+  .card-header {
+    background-color: #007bff; // Azul más profesional
+    color: white;
+    border-top-left-radius: 16px;
+    border-top-right-radius: 16px;
+    padding: 16px;
+  }
+  
+  .card-title {
+    font-size: 1.6em;
+    font-weight: 600;
+    text-align: center;
+  }
+  
+  .card-content {
+    padding: 24px;
+  }
+  
+  .form-item {
+    margin-bottom: 20px;
+  
+    ion-label {
+      color: #333; // Color más suave para el texto
+    }
+  }
+  
+  .input-field {
+    --background: #f7f7f7;
+    --padding-start: 12px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.2s;
+  
+    &:focus {
+      box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); // Sombra azul al enfocar
+    }
+  }
+  
+  .submit-button {
+    background-color: #007bff;
+    color: white;
+    border-radius: 8px;
+    font-size: 1.2em;
+    font-weight: 500;
+    transition: background-color 0.3s;
+  
+    &:hover {
+      background-color: #0056b3; // Color más oscuro al pasar el mouse
+    }
+  
+    &:disabled {
+      background-color: #ccc;
+      cursor: not-allowed;
+    }
+  }
+  
+  .close-buttons {
+    margin-top: 20px;
+  }
+  
+  .close-button {
+    color: #007bff;
+    font-weight: 500;
+    text-decoration: underline;
+  }
+  

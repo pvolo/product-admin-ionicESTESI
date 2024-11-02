@@ -4,6 +4,7 @@ import { Product } from 'src/app/models/product.model';
 import { User } from 'src/app/models/user.model';
 import { FirebaseService } from 'src/app/services/firebase.service';
 import { UtilsService } from 'src/app/services/utils.service';
+import { ModalController } from '@ionic/angular';
 
 @Component({
   selector: 'app-reserve',
@@ -17,14 +18,15 @@ export class ReserveComponent {
 
   constructor(
     private firebaseSvc: FirebaseService,
-    private utilsSvc: UtilsService
+    private utilsSvc: UtilsService,
+    private modalController: ModalController
   ) {
     this.user = this.utilsSvc.getFromLocalStorage('user');
     this.form = new FormGroup({
       seats: new FormControl(1, [
         Validators.required,
         Validators.min(1),
-        Validators.max(this.product ? this.product.soldUnits : 1),
+        Validators.max(this.product ? this.product.soldUnits : 8),
       ])
     });
   }
@@ -35,7 +37,8 @@ export class ReserveComponent {
       if (reservedSeats > this.product.soldUnits) {
         this.utilsSvc.presentToast({
           message: 'Asientos insuficientes',
-          color: 'danger'
+          color: 'danger',
+          duration: 2000
         });
         return;
       }
@@ -55,5 +58,9 @@ export class ReserveComponent {
         duration: 2000
       });
     }
+  }
+
+  async cerrarModal() {
+    await this.modalController.dismiss();
   }
 }
