@@ -9,7 +9,7 @@
 <ion-card mode="ios" color="secondary" class="d-flex-center ion-text-center" *ngIf="!loading && products.length">
   <div>
     <h5>Viajes Agregados: {{products.length}}</h5>
-    <h5>Ganancia Esperada <br>
+    <h5>Ganancia Pendiente Esperada <br>
        {{getProfits()}}</h5>
 
     
@@ -30,7 +30,7 @@
           <br><strong>Asientos Disponibles:</strong>{{p.soldUnits}}
           </div>
           <ion-chip color="primary" mode="ios" outline="true">
-            <ion-label ><b>Valor:</b> {{p.price}}</ion-label>
+            <ion-label ><b>Valor:</b> {{p.price}}</ion-label><ion-icon name="arrow-back-circle-outline"></ion-icon>
           </ion-chip>
         </ion-label>
       </ion-item>
