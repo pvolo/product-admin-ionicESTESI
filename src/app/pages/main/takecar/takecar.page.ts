@@ -1,9 +1,8 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { orderBy } from 'firebase/firestore';
-import { Product } from 'src/app/models/product.model';
-import { User } from 'src/app/models/user.model';
 import { FirebaseService } from 'src/app/services/firebase.service';
 import { UtilsService } from 'src/app/services/utils.service';
+import { Product } from 'src/app/models/product.model';
+import { User } from 'src/app/models/user.model';
 import { AddUpdateProductComponent } from 'src/app/shared/components/add-update-product/add-update-product.component';
 import { ReserveComponent } from 'src/app/shared/components/reserve/reserve.component';
 
@@ -19,7 +18,9 @@ export class TakecarPage implements OnInit {
   products: Product[] = [];
   loading = false;
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.getProducts();
+  }
 
   user(): User {
     return this.utilsSvc.getFromLocalStorage('user');
@@ -29,23 +30,42 @@ export class TakecarPage implements OnInit {
     this.getProducts();
   }
 
-  doRefresh(event) {  
+  doRefresh(event) {
     setTimeout(() => {
       this.getProducts();
       event.target.complete();
     }, 1000);
   }
 
-  getProducts() {
-    let path = `users/${this.user().uid}/products`;
+  async getProducts() {
     this.loading = true;
-    let query = [orderBy('soldUnits', 'desc')];
+    const allProducts: Product[] = [];
 
-    let sub = this.firebaseSvc.getCollectionData(path, query).subscribe({
-      next: (res: any) => {
-        this.products = res;
+    // 1. Obtener todos los usuarios
+    this.firebaseSvc.getAllProducts().subscribe({
+      next: async (users: any) => {
+        // 2. Para cada usuario, obtener sus productos
+        for (let user of users) {
+          // Obtiene los productos de este usuario
+          this.firebaseSvc.getUserProducts(user.uid).subscribe({
+            next: (userProducts: any) => {
+              // Agregar el nombre del usuario a cada producto
+              userProducts.forEach((product: Product) => {
+                product.userName = user.name; // Agrega el nombre del usuario al producto
+              });
+
+              allProducts.push(...userProducts); // Agregar productos al arreglo
+              this.products = allProducts; // Asignar todos los productos a this.products
+              this.loading = false;
+            },
+            error: () => {
+              this.loading = false;
+            }
+          });
+        }
+      },
+      error: () => {
         this.loading = false;
-        sub.unsubscribe();
       }
     });
   }

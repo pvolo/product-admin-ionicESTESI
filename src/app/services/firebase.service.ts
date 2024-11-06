@@ -4,7 +4,7 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { getAuth,signInWithEmailAndPassword,createUserWithEmailAndPassword,updateProfile,sendPasswordResetEmail } from 'firebase/auth';
 import { User } from '../models/user.model';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { getFirestore,setDoc,doc, getDoc,addDoc,collection,collectionData,query,updateDoc,deleteDoc } from '@angular/fire/firestore';
+import { getFirestore,setDoc,doc, getDoc,addDoc,collection,collectionData,query,updateDoc,deleteDoc, orderBy } from '@angular/fire/firestore';
 import { UtilsService } from './utils.service';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
 import{getStorage,uploadString,ref,getDownloadURL,deleteObject} from "firebase/storage"
@@ -67,9 +67,15 @@ export class FirebaseService {
 
     //====Obtener Documentos de una Coleccion
 
-    getCollectionData(path: string,collectionQuery?:any){
-      const ref = collection(getFirestore(),path)
-      return collectionData(query(ref, ...collectionQuery),{idField:'id'});
+    getCollectionData(path: string, collectionQuery?: any) {
+      const ref = collection(getFirestore(), path);
+      const queryRef = query(ref, ...collectionQuery);
+      
+      collectionData(queryRef, { idField: 'id' }).subscribe(data => {
+        console.log('Datos obtenidos de Firebase:', data); // Verifica qué datos se están obteniendo
+      });
+    
+      return collectionData(queryRef, { idField: 'id' });
     }
 
 
@@ -132,11 +138,28 @@ export class FirebaseService {
 
     }
 
+  //==== Obtener los productos de todos los usuarios
+  getAllProducts() {
+    // Primero obtenemos todos los usuarios
+    const usersRef = collection(getFirestore(), 'users'); // Reemplaza 'users' por tu ruta correcta si es diferente
+    const usersQuery = query(usersRef);
 
+    return collectionData(usersQuery, { idField: 'uid' }); // Devuelve los usuarios
+  }
 
-
-
+  //==== Obtener los productos de un usuario específico
+  getUserProducts(uid: string) {
+    // Obtenemos los productos de la subcolección de un usuario
+    const productsRef = collection(getFirestore(), `users/${uid}/products`);
+    const productsQuery = query(productsRef, orderBy('soldUnits', 'desc'));
+    
+    return collectionData(productsQuery, { idField: 'id' });
+  }
 }
+
+
+
+
 
 
 
