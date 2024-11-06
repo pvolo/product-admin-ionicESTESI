@@ -9,6 +9,8 @@ export interface Product{
         soldUnits: number,
         id: string,
         departureTime: string;
+        userName?: string;
+        
     
 
 
