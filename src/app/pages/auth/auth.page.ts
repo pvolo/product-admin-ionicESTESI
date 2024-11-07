@@ -81,7 +81,7 @@ export class AuthPage implements OnInit {
         this.utilsSvc.presentToast({
           message: `Te damos la Bienvenida ${user.name} `,
           duration: 1500,
-          color:'primary',
+          color:'warning',
           position:'middle',
           icon:'persons-circle-outline'
         })
