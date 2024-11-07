@@ -4,12 +4,12 @@
       <!---------------------- BACK BUTTON --------------------------->
       <ion-back-button *ngIf="backButton" [defaultHref]="backButton" style="height: 60px; width: 60px"></ion-back-button>
       <!---------------------- DISMISS MODAL --------------------------->
-      <ion-button (click)="dismissModal()" *ngIf="isModal">
+      <ion-button (click)="dismissModal()" *ngIf="isModal" color="warning">
         <ion-icon name="close-circle-outline"></ion-icon>
     </ion-button>
   <ion-menu-button *ngIf="showMenu" menu="menu-content"></ion-menu-button>
 </ion-button>
-    <ion-title>
+    <ion-title color="warning">
       <strong>{{title}}</strong>
     <div class="admin">iTakeU</div></ion-title>
   </ion-toolbar>

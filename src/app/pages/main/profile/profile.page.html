@@ -6,8 +6,8 @@
     <ion-icon *ngIf="!user()?.image" class="empty-icon" name="person-circle-outline"></ion-icon>
   </ion-avatar>
 
-  <ion-button class="photo-btn" (click)="takeImage()" mode="ios" size="small" shape="round">
-    <ion-icon name="camera-outline"></ion-icon>
+  <ion-button class="photo-btn" (click)="takeImage()" mode="ios" size="small" shape="round" color="warning">
+    <ion-icon name="camera-outline" color="secondary"></ion-icon>
   </ion-button>
 
   <ion-item>

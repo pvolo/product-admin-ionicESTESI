@@ -10,6 +10,7 @@ export interface Product{
         id: string,
         departureTime: string;
         userName?: string;
+        userUid: string;
         
     
 

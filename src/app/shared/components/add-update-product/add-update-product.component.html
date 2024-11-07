@@ -17,8 +17,8 @@
 <br>
 
 <!--  TOMAR/SELECCIONAR IMAGEN-->
-<ion-button (click)="takeImage()" mode="ios" size="small" shape="round">
-  <br>  Tomar/Seleccionar <br> <br>
+<ion-button (click)="takeImage()" mode="ios" size="small" shape="round" color="warning">
+  <br color="secondary">  Tomar/Seleccionar <br> <br>
 </ion-button>
 
 
@@ -38,24 +38,19 @@ type="text"
 label="Patente Vehiculo"
 ></app-custom-input>
 
-<!-- Punto de salida-->
-    <app-custom-input autocomplete="subname" 
-    [control]="form.controls.subname"
-    type="text"
-    label="Punto de salida"
-    ></app-custom-input>
+
 
 <!-- Punto de destino-->
-    <app-custom-input autocomplete="name" 
-    [control]="form.controls.name"
+    <app-custom-input autocomplete="subname" 
+    [control]="form.controls.subname"
     type="text"
     label="Destino"
     ></app-custom-input>
     
 <!-- Validadores del Nombre-->
-    <div class="validators" *ngIf="form.controls.name.errors && form.controls.name.touched">
-      <div *ngIf="form.controls.name.errors?.['required']"> Este Campo es Requerido </div>
-      <div *ngIf="form.controls.name.errors?.['minLenght']">Al menos 4 Caracteres.</div>
+    <div class="validators" *ngIf="form.controls.subname.errors && form.controls.subname.touched">
+      <div *ngIf="form.controls.subname.errors?.['required']"> Este Campo es Requerido </div>
+      <div *ngIf="form.controls.subname.errors?.['minLenght']">Al menos 4 Caracteres.</div>
     </div>
 
     <!-- Price-->
@@ -89,7 +84,7 @@ label="Patente Vehiculo"
 
     <!-- Hora de salida -->
     <ion-item>
-      <ion-label>Hora de salida</ion-label>
+      <ion-label>Hora de Salida</ion-label>
       <ion-datetime
         presentation="time" 
         displayFormat="h:mm A"
@@ -98,8 +93,8 @@ label="Patente Vehiculo"
       </ion-datetime>
     </ion-item>
 
-    <ion-button   mode="ios" class="ion-margin" type="submit" [disabled]="form.invalid">
-    {{ product ? 'Actualizar Viaje': 'Agregar Viaje'}}
+    <ion-button   mode="ios" class="ion-margin" type="submit" [disabled]="form.invalid" color="warning"> <strong color="secondary">
+    {{ product ? 'Actualizar Viaje': 'Agregar Viaje'}} </strong>
       <ion-icon slot="end" name="checkmark-circle-outline"></ion-icon>
     </ion-button>
 

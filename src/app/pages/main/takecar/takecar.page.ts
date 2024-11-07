@@ -40,32 +40,37 @@ export class TakecarPage implements OnInit {
   async getProducts() {
     this.loading = true;
     const allProducts: Product[] = [];
-
-    // 1. Obtener todos los usuarios
+  
+    // Aquí obtienes todos los productos desde Firebase
     this.firebaseSvc.getAllProducts().subscribe({
       next: async (users: any) => {
-        // 2. Para cada usuario, obtener sus productos
         for (let user of users) {
-          // Obtiene los productos de este usuario
           this.firebaseSvc.getUserProducts(user.uid).subscribe({
-            next: (userProducts: any) => {
-              // Agregar el nombre del usuario a cada producto
+            next: async (userProducts: any) => {
               userProducts.forEach((product: Product) => {
-                product.userName = user.name; // Agrega el nombre del usuario al producto
+                product.userName = user.name;
+                product.userUid = user.uid;
               });
-
-              allProducts.push(...userProducts); // Agregar productos al arreglo
-              this.products = allProducts; // Asignar todos los productos a this.products
+              allProducts.push(...userProducts);
+  
+              // Guarda productos en el almacenamiento local
+              await this.utilsSvc.saveInLocalStorage('products', allProducts);
+              this.products = allProducts;
               this.loading = false;
             },
-            error: () => {
+            error: (err) => {
+              console.error('Error al obtener productos del usuario', user.uid, err);
               this.loading = false;
             }
           });
         }
       },
-      error: () => {
+      error: async (err) => {
+        console.error('Error al obtener usuarios', err);
         this.loading = false;
+  
+        // Si hay error, intenta cargar desde almacenamiento local
+        this.products = await this.utilsSvc.getFromLocalStorage('products') || [];
       }
     });
   }
@@ -84,6 +89,10 @@ export class TakecarPage implements OnInit {
       component: ReserveComponent,
       componentProps: { product }
     });
-    if (success) this.getProducts();
+  
+    if (success) {
+      // Recargar los productos para reflejar los cambios de asientos disponibles
+      this.getProducts();
+    }
   }
 }

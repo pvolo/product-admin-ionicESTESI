@@ -22,13 +22,12 @@ export class AddUpdateProductComponent  implements OnInit {
   form = new FormGroup({
     id: new FormControl(''),
     image: new FormControl('',[Validators.required]),
-    name: new FormControl('',[Validators.required, Validators.minLength(4)]),
     subname: new FormControl('',[Validators.required, Validators.minLength(4)]),
     patente: new FormControl('',[Validators.required, Validators.minLength(7)]),
     price: new FormControl(null,[Validators.required, Validators.min(1)]),
     soldUnits: new FormControl(null,[Validators.required, Validators.min(1)]),
     departureTime: new FormControl('', [Validators.required]), 
-
+    
     
 
 
@@ -85,109 +84,96 @@ setNumberInputs(){
 
 
 //================ CREAR PRODUCTO
-  async createProduct() {
-      let path = `users/${this.user.uid}/products`
+async createProduct() {
+  let path = `users/${this.user.uid}/products`;
 
-      const loading = await this.utilsSvc.loading();
-      await loading.present();
+  const loading = await this.utilsSvc.loading();
+  await loading.present();
 
+  //========= SUBIR IMAGEN Y OBTENER URL ============
+  let dataUrl = this.form.value.image;
+  let imagePath = `${this.user.uid}/${Date.now()}`;
+  let imageUrl = await this.firebaseSvc.uploadImage(imagePath, dataUrl);
+  this.form.controls.image.setValue(imageUrl);
 
-      ///========= SUBIR IMAGEN Y OBTENER URL ============
-        let dataUrl= this.form.value.image;
-        let imagePath=`${this.user.uid}/${Date.now()}`;
-        let imageUrl= await this.firebaseSvc.uploadImage(imagePath,dataUrl);
-        this.form.controls.image.setValue(imageUrl);
-      
+  const newProduct = {
+    ...this.form.value,
+    userUid: this.user.uid  
+  };
 
-      delete this.form.value.id
+  delete newProduct.id;
 
-      this.firebaseSvc.addDocument(path,this.form.value).then(async res => {
-
-        this.utilsSvc.dismissModal({success:true});
-
-        this.utilsSvc.presentToast({
-          message:'Viaje Añadido Exitosamente',
-          duration: 2000,
-          color:'success',
-          position:'middle',
-          icon:'checkmark-circle-outline'
-        })
-
-      }).catch(error =>{
-        console.log(error);
-
-        this.utilsSvc.presentToast({
-          message: error.message,
-          duration: 2500,
-          color:'primary',
-          position:'middle',
-          icon:'alert-circle-outline'
-        })
-
-      }).finally(()=>{
-        loading.dismiss();
-      })
-  
+  this.firebaseSvc.addDocument(path, newProduct).then(async res => {
+    this.utilsSvc.dismissModal({ success: true });
+    this.utilsSvc.presentToast({
+      message: 'Viaje Añadido Exitosamente',
+      duration: 2000,
+      color: 'warning',
+      position: 'middle',
+      icon: 'checkmark-circle-outline'
+    });
+  }).catch(error => {
+    console.log(error);
+    this.utilsSvc.presentToast({
+      message: error.message,
+      duration: 2500,
+      color: 'primary',
+      position: 'middle',
+      icon: 'alert-circle-outline'
+    });
+  }).finally(() => {
+    loading.dismiss();
+  });
 }
 
 
 //================ ACTUALIZAR PRODUCTO
 async updateProduct() {
-  let path = `users/${this.user.uid}/products/${this.product.id}`
+  let path = `users/${this.user.uid}/products/${this.product.id}`;
 
   const loading = await this.utilsSvc.loading();
   await loading.present();
 
+  if (this.form.value.image !== this.product.image) {
+    let dataUrl = this.form.value.image;
+    let imagePath = await this.firebaseSvc.getFilePath(this.product.image);
+    let imageUrl = await this.firebaseSvc.uploadImage(imagePath, dataUrl);
+    this.form.controls.image.setValue(imageUrl);
+  }
 
-  ///========= SUBIR IMAGEN SI CAMBIO Y OBTENER URL ============
-    if(this.form.value.image!=this.product.image){
-      let dataUrl= this.form.value.image;
-      let imagePath=await this.firebaseSvc.getFilePath(this.product.image);
-      let imageUrl= await this.firebaseSvc.uploadImage(imagePath,dataUrl);
-      this.form.controls.image.setValue(imageUrl);
+  const updatedProduct = {
+    ...this.form.value,
+    userUid: this.user.uid  
+  };
 
+  delete updatedProduct.id;
 
-
-
-    }
-
-  
-
-  delete this.form.value.id
-
-  this.firebaseSvc.updateDocument(path,this.form.value).then(async res => {
-
-    this.utilsSvc.dismissModal({success:true});
-
+  this.firebaseSvc.updateDocument(path, updatedProduct).then(async res => {
+    this.utilsSvc.dismissModal({ success: true });
     this.utilsSvc.presentToast({
-      message:'Viaje Actualizado Exitosamente',
+      message: 'Viaje Actualizado Exitosamente',
       duration: 2000,
-      color:'success',
-      position:'middle',
-      icon:'checkmark-circle-outline'
-    })
-
-  }).catch(error =>{
+      color: 'success',
+      position: 'middle',
+      icon: 'checkmark-circle-outline'
+    });
+  }).catch(error => {
     console.log(error);
-
     this.utilsSvc.presentToast({
       message: error.message,
       duration: 2500,
-      color:'primary',
-      position:'middle',
-      icon:'alert-circle-outline'
-    })
-
-  }).finally(()=>{
+      color: 'primary',
+      position: 'middle',
+      icon: 'alert-circle-outline'
+    });
+  }).finally(() => {
     loading.dismiss();
-  })
-
+  });
 }
 
 
-// Método para redirigir a la página de mapa
 irAMap() {
-  this.router.navigate(['/map']); // Cambia '/map' por la ruta correspondiente a tu página de mapa
+  this.router.navigate(['/map']); 
 }
 }
 

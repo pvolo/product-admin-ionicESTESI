@@ -140,11 +140,13 @@ export class FirebaseService {
 
   //==== Obtener los productos de todos los usuarios
   getAllProducts() {
+    
     // Primero obtenemos todos los usuarios
     const usersRef = collection(getFirestore(), 'users'); // Reemplaza 'users' por tu ruta correcta si es diferente
     const usersQuery = query(usersRef);
 
-    return collectionData(usersQuery, { idField: 'uid' }); // Devuelve los usuarios
+    return collectionData(usersQuery, { idField: 'uid' });
+     // Devuelve los usuarios
   }
 
   //==== Obtener los productos de un usuario específico
@@ -155,6 +157,13 @@ export class FirebaseService {
     
     return collectionData(productsQuery, { idField: 'id' });
   }
+
+
+// Método para actualizar los asientos vendidos de un producto
+updateProductSoldUnits(uid: string, productId: string, soldUnits: number) {
+  const productRef = doc(getFirestore(), `users/${uid}/products/${productId}`);
+  return updateDoc(productRef, { soldUnits });
+}
 }
 
 

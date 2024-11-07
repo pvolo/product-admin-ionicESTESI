@@ -2,17 +2,38 @@ import { inject, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { AlertController, AlertOptions, LoadingController, ModalController, ModalOptions, ToastController, ToastOptions } from '@ionic/angular';
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
+import { Storage } from '@ionic/storage-angular';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UtilsService {
+  private _storage: Storage | null = null;
+
 
   loadingCtrl= inject(LoadingController);
   toastCtrl= inject(ToastController);
   modarCtrl= inject(ModalController);
   router= inject(Router)
   alertCtrl=inject(AlertController)
+
+
+
+
+  //====almacenamiento local prod
+  constructor(private storage: Storage) {
+    this.init();
+  }
+
+  async init() {
+    // Inicializa el almacenamiento
+    const storage = await this.storage.create();
+    this._storage = storage;
+  }
+
+
+
+
 
   async takePicture(promptLabelHeader: string){
   return await Camera.getPhoto({

@@ -20,7 +20,10 @@ export class ReserveComponent {
     private firebaseSvc: FirebaseService,
     private utilsSvc: UtilsService,
     private modalController: ModalController
-  ) {
+  ) 
+  
+  
+  {
     this.user = this.utilsSvc.getFromLocalStorage('user');
     this.form = new FormGroup({
       seats: new FormControl(1, [
@@ -34,6 +37,8 @@ export class ReserveComponent {
   async reserveSeats() {
     if (this.form.valid) {
       const reservedSeats = this.form.controls['seats'].value;
+  
+      // Verificar si la cantidad de asientos reservados no excede los asientos disponibles
       if (reservedSeats > this.product.soldUnits) {
         this.utilsSvc.presentToast({
           message: 'Asientos insuficientes',
@@ -42,15 +47,30 @@ export class ReserveComponent {
         });
         return;
       }
-
-      const updatedProduct = {
-        ...this.product,
-        soldUnits: this.product.soldUnits - reservedSeats
+  
+      // Datos de la reserva
+      const reservation = {
+        userUid: this.user.uid,
+        userName: this.user.name,
+        userEmail: this.user.email,
+        reservedSeats,
+        productId: this.product.id,
+        productName: this.product.name
       };
-
-      const path = `users/${this.user.uid}/products/${this.product.id}`;
-      await this.firebaseSvc.updateDocument(path, updatedProduct);
-
+  
+      // Guardar la reserva en Firebase
+      const reservationPath = `users/${this.user.uid}/reservations`;
+      await this.firebaseSvc.addDocument(reservationPath, reservation);
+  
+      // Actualizar el número de asientos disponibles en el producto en Firebase
+      const updatedSoldUnits = this.product.soldUnits - reservedSeats;
+  
+      if (updatedSoldUnits >= 0) {
+        // Verifica que esté actualizando el producto en la subcolección de ese usuario específico
+        await this.firebaseSvc.updateProductSoldUnits(this.product.userUid, this.product.id, updatedSoldUnits);
+      }
+  
+      // Cerrar el modal y mostrar mensaje de éxito
       this.utilsSvc.dismissModal({ success: true });
       this.utilsSvc.presentToast({
         message: 'Reserva realizada con éxito',
@@ -63,4 +83,6 @@ export class ReserveComponent {
   async cerrarModal() {
     await this.modalController.dismiss();
   }
+
 }
+

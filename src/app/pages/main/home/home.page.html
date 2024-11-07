@@ -25,11 +25,11 @@
           <img [src]="p.image" />
         </ion-avatar>
         <ion-label>
-          <div class="name"><strong style="color: rgb(4, 138, 98);">CONDUCTOR:</strong>{{user()?.name}}</div>
-          <div class="data" > <strong>Patente:{{ p.patente}}</strong> <br> <strong>Salida:{{ p.subname}} </strong> <br> <strong>Destino:{{ p.name}}</strong> <br> <strong>Hora Partida: {{p.departureTime}}</strong>
+          <div class="name"><strong style="color: rgb(224, 214, 21);">CONDUCTOR:</strong>{{user()?.name}}</div>
+          <div class="data" > <strong>Patente:{{ p.patente}}</strong> <br> <strong>Destino:{{ p.subname}} </strong>  <br> <strong>Hora Partida: {{p.departureTime}}</strong>
           <br><strong>Asientos Disponibles:</strong>{{p.soldUnits}}
           </div>
-          <ion-chip color="primary" mode="ios" outline="true">
+          <ion-chip color="warning" mode="ios" outline="true">
             <ion-label ><b>Valor:</b> {{p.price}}</ion-label><ion-icon name="arrow-back-circle-outline"></ion-icon>
           </ion-chip>
         </ion-label>
@@ -77,8 +77,8 @@
 
 <!------------   AGREGAR PRODUCTO   ----------->
 <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-  <ion-fab-button (click)="addUpdateProduct()">
-    <ion-icon name="add"></ion-icon>
+  <ion-fab-button (click)="addUpdateProduct()" color="warning">
+    <ion-icon name="add" color="secondary"></ion-icon>
   </ion-fab-button>
 </ion-fab>
 
