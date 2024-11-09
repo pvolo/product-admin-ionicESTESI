@@ -7,3 +7,53 @@ ion-card{
 ion-content{
     --padding-bottom:70px
 }
+
+
+.small-card {
+    width: 200px; /* Ajusta el tamaño según sea necesario */
+    height: 150px;
+    max-width: 100%;
+}
+
+.left-aligned-card {
+    margin-left: 0; /* Alinea el card a la izquierda */
+}
+
+.card-content {
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 14px;
+}
+
+.small-card {
+    width: 200px; /* Ajusta el tamaño según sea necesario */
+    height: 150px;
+    max-width: 100%;
+}
+
+.right-aligned-card {
+    margin-left: auto; /* Alinea el card a la derecha */
+}
+
+.card-content {
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 14px;
+}
+
+.card-container {
+    display: flex;
+    justify-content: space-between; /* O 'center', dependiendo de cómo quieras que se alineen */
+    align-items: center; /* Alinea verticalmente los elementos si es necesario */
+}
+
+.small-card {
+    width: 500px;
+    height: 100px;
+    margin: 0 5px; /* Espaciado entre los cards */
+    margin-top: 20px;
+}
