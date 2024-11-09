@@ -1,17 +1,19 @@
 .reservar-asientos-card {
-    background-color: #ffffff;
-    border-radius: 16px;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-    transition: transform 0.2s, box-shadow 0.2s;
+  background-color: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s, box-shadow 0.2s;
+  min-height: 800px; /* Ajusta el valor según el tamaño mínimo que necesites */
   
     &:hover {
       transform: translateY(-2px);
-      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+      box-shadow: 0 12px 24px rgb(0, 0, 0);
     }
   }
   
   .card-header {
     background-color: #172f55; 
+    background-color: #002d64; // Azul más profesional
     color: white;
     border-top-left-radius: 16px;
     border-top-right-radius: 16px;
@@ -22,6 +24,7 @@
     font-size: 1.6em;
     font-weight: 600;
     text-align: center;
+    color: #FFB800;
   }
   
   .card-content {
@@ -30,9 +33,10 @@
   
   .form-item {
     margin-bottom: 20px;
-  
     ion-label {
       color: #384861; // Color más suave para el texto
+
+      color: #000000; // Color más suave para el texto
     }
   }
   
@@ -45,6 +49,8 @@
   
     &:focus {
       box-shadow: 0 0 5px rgba(230, 193, 6, 0.632); // Sombra azul al enfocar
+
+      box-shadow: 0 0 5px #007bff80; // Sombra azul al enfocar
     }
   }
   
@@ -58,6 +64,16 @@
   
     &:hover {
       background-color: #dcaa08; 
+    --background: #FFB800; /* Fondo amarillo */
+    color: #000; /* Color del texto */
+    border-radius: 16px; /* Esquinas redondeadas */
+    padding: 8px 24px; /* Ajusta el tamaño del botón */
+    margin: 0 auto; /* Centrando el botón */
+    display: block; /* Permite que el margen automático funcione */
+
+  
+    &:hover {
+      background-color: #FFB800; // Color más oscuro al pasar el mouse
     }
   
     &:disabled {
@@ -72,7 +88,15 @@
   
   .close-button {
     color: #ffc409;
+    color: #000000;
     font-weight: 500;
     text-decoration: underline;
   }
   
+  .close-button {
+    border: 2px solid #000000; /* Borde de color amarillo */
+    color: #ffffff; /* Opcional: cambia el color del texto */
+    background-color: #000000;
+    border-radius: 8px; /* Opcional: ajusta el borde redondeado */
+    padding: 8px 16px; /* Opcional: ajusta el espaciado interno */
+}
