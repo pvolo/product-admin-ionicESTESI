@@ -14,8 +14,8 @@
     <ion-label position="stacked">Nombre</ion-label>
     <ion-input [(ngModel)]="editableName" (ngModelChange)="onNameChange()"></ion-input>
   </ion-item>
-  <ion-button expand="block" color="primary" (click)="saveName()" *ngIf="isNameChanged">
-    <ion-icon slot="start" name="save-outline"></ion-icon>
+  <ion-button expand="block" color="primary" (click)="saveName()" *ngIf="isNameChanged" color="warning">
+    <ion-icon slot="start" name="save-outline" ></ion-icon>
     Guardar Nombre
   </ion-button>
 

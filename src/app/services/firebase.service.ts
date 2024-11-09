@@ -8,6 +8,7 @@ import { getFirestore,setDoc,doc, getDoc,addDoc,collection,collectionData,query,
 import { UtilsService } from './utils.service';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
 import{getStorage,uploadString,ref,getDownloadURL,deleteObject} from "firebase/storage"
+import { Observable } from 'rxjs';
 
 
 
@@ -164,6 +165,14 @@ updateProductSoldUnits(uid: string, productId: string, soldUnits: number) {
   const productRef = doc(getFirestore(), `users/${uid}/products/${productId}`);
   return updateDoc(productRef, { soldUnits });
 }
+
+
+
+  // Método para obtener las ubicaciones del usuario
+  getUbicacionesDeUsuario(userId: string): Observable<any[]> {
+    return this.firestore.collection(`users/${userId}/ubicaciones`).valueChanges(); // Correcto, solo recuperamos los datos
+  }
+
 }
 
 

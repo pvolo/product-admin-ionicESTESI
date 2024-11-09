@@ -11,6 +11,7 @@ export interface Product{
         departureTime: string;
         userName?: string;
         userUid: string;
+        nombreRuta: string; 
         
     
 

@@ -29,6 +29,9 @@
           <img [src]="p.image" />
         </ion-avatar>
         <ion-label>
+          <div class="name"><strong style="color: rgb(224, 214, 21);">CONDUCTOR:</strong>{{user()?.name}}</div>
+          <div class="data" > <strong>Patente:{{ p.patente}}</strong> <br> <strong>Destino:{{ p.nombreRuta}} </strong>  <br> <strong>Hora Partida: {{p.departureTime}}</strong>
+
           <div class="name"><strong style="color: #FFB800;">CONDUCTOR:</strong>{{user()?.name}}</div>
           <div class="data" > <strong>Patente:{{ p.patente}}</strong> <br> <strong>Destino:{{ p.subname}} </strong>  <br> <strong>Hora Partida: {{p.departureTime}}</strong>
           <br><strong>Asientos Disponibles:</strong>{{p.soldUnits}}

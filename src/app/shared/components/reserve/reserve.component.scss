@@ -12,6 +12,7 @@
   }
   
   .card-header {
+    background-color: #172f55; 
     background-color: #002d64; // Azul más profesional
     color: white;
     border-top-left-radius: 16px;
@@ -33,6 +34,8 @@
   .form-item {
     margin-bottom: 20px;
     ion-label {
+      color: #384861; // Color más suave para el texto
+
       color: #000000; // Color más suave para el texto
     }
   }
@@ -45,11 +48,22 @@
     transition: box-shadow 0.2s;
   
     &:focus {
+      box-shadow: 0 0 5px rgba(230, 193, 6, 0.632); // Sombra azul al enfocar
+
       box-shadow: 0 0 5px #007bff80; // Sombra azul al enfocar
     }
   }
   
   .submit-button {
+    background-color: #ffc409;
+    color: white;
+    border-radius: 8px;
+    font-size: 1.2em;
+    font-weight: 500;
+    transition: background-color 0.3s;
+  
+    &:hover {
+      background-color: #dcaa08; 
     --background: #FFB800; /* Fondo amarillo */
     color: #000; /* Color del texto */
     border-radius: 16px; /* Esquinas redondeadas */
@@ -73,6 +87,7 @@
   }
   
   .close-button {
+    color: #ffc409;
     color: #000000;
     font-weight: 500;
     text-decoration: underline;
