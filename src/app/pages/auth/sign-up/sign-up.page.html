@@ -40,12 +40,12 @@
 
 <!-- PASSWORD-->
 
-   <app-custom-input
-   [control]="form.controls.password"
-   icon="lock-closed-outline"
-   type="password" 
-   label="Contraseña"
-   
+  <app-custom-input
+  [control]="form.controls.password"
+  icon="lock-closed-outline"
+  type="password" 
+  label="Contraseña"
+  
     ></app-custom-input>
     
     
@@ -54,7 +54,7 @@
     </div>
 
 
-    <ion-button  expand="block"  mode="ios" class="submit" type="submit" [disabled]="form.invalid">
+    <ion-button  expand="block"  mode="ios" class="submit" type="submit" [disabled]="form.invalid" color="warning">
       Registrarse
       <ion-icon slot="end" name="person-add-outline"></ion-icon>
     </ion-button>

@@ -4,9 +4,9 @@
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
 
-  <ion-card mode="ios" color="secondary" class="d-flex-center ion-text-center" *ngIf="!loading && products.length">
-    <div>
-      <h5><br> VIAJES DISPONIBLES: <br> {{products.length}}</h5>
+  <ion-card mode="ios" color="secondary" class="d-flex-center ion-text-center small-card" *ngIf="!loading && products.length">
+    <div class="card-content">
+      <h5>VIAJES DISPONIBLES: <br> {{products.length}}</h5>
     </div>
   </ion-card>
 
@@ -18,7 +18,7 @@
         </ion-avatar>
         <ion-label>
           <div class="name">
-            <strong style="color: rgb(224, 214, 21)">CONDUCTOR:</strong>  {{ p.userName }}<!-- Cambiado para mostrar el nombre del conductor -->
+            <strong style="color: #FFB800">CONDUCTOR:</strong>  {{ p.userName }}
           </div>
           <div class="data">
             <strong>PATENTE: {{ p.patente }}</strong><br>
