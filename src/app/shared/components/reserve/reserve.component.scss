@@ -11,7 +11,7 @@
   }
   
   .card-header {
-    background-color: #007bff; // Azul más profesional
+    background-color: #172f55; 
     color: white;
     border-top-left-radius: 16px;
     border-top-right-radius: 16px;
@@ -32,7 +32,7 @@
     margin-bottom: 20px;
   
     ion-label {
-      color: #333; // Color más suave para el texto
+      color: #384861; // Color más suave para el texto
     }
   }
   
@@ -44,12 +44,12 @@
     transition: box-shadow 0.2s;
   
     &:focus {
-      box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); // Sombra azul al enfocar
+      box-shadow: 0 0 5px rgba(230, 193, 6, 0.632); // Sombra azul al enfocar
     }
   }
   
   .submit-button {
-    background-color: #007bff;
+    background-color: #ffc409;
     color: white;
     border-radius: 8px;
     font-size: 1.2em;
@@ -57,7 +57,7 @@
     transition: background-color 0.3s;
   
     &:hover {
-      background-color: #0056b3; // Color más oscuro al pasar el mouse
+      background-color: #dcaa08; 
     }
   
     &:disabled {
@@ -71,7 +71,7 @@
   }
   
   .close-button {
-    color: #007bff;
+    color: #ffc409;
     font-weight: 500;
     text-decoration: underline;
   }

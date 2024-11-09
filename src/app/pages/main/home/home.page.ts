@@ -57,31 +57,22 @@ return this.products.reduce((index,product)=>index + product.price * product.sol
 
 
   //====Obtener los Productos
-  getProducts(){
-    let path = `users/${this.user().uid}/products`;
-
-    this.loading=true;
-
-    let query = [
-    orderBy('soldUnits','desc'),
-    //Ordenar mayor a... where('soldUnits','>',30)
-  ]
-
-
-
-    
-
-    let sub = this.fireBaseSvs.getCollectionData(path,query).subscribe({
-      next:(res:any) => {
-        console.log(res);
+  getProducts() {
+    const path = `users/${this.user().uid}/products`;
+    this.loading = true;
+  
+    const query = [
+      orderBy('soldUnits', 'desc')
+    ];
+  
+    const sub = this.fireBaseSvs.getCollectionData(path, query).subscribe({
+      next: (res: any) => {
         this.products = res;
-
-        this.loading=false;
+        this.loading = false;
         sub.unsubscribe();
       }
-    })
+    });
   }
-
 
 
 

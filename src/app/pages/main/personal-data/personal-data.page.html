@@ -1,4 +1,4 @@
-<app-header [showMenu]="true" title="Agregar Datos Personales"></app-header>
+<app-header [showMenu]="true" title="Datos Personales"></app-header>
 <ion-content class="ion-padding">
   <ion-item>
     <ion-label position="stacked">RUN</ion-label>
@@ -13,9 +13,9 @@
       [(ngModel)]="user.birthdate"
     ></ion-datetime>
   </ion-item>
-  <ion-button expand="block" (click)="savePersonalData()">Guardar</ion-button>
+  <ion-button expand="block" (click)="savePersonalData()" color="warning">Guardar</ion-button>
   <ion-footer>
-    <ion-button expand="full" (click)="volverAlInicio()">Volver</ion-button>
+    <ion-button expand="full" (click)="volverAlInicio()" color="warning">Volver</ion-button>
   </ion-footer>
   
   </ion-content>

@@ -29,7 +29,23 @@
   <ion-label>Marcar Ubicaciones </ion-label>
 </ion-item>
 
+<ion-item>
+  <ion-label>Seleccionar Ruta</ion-label>
+  <ion-select formControlName="nombreRuta" placeholder="Selecciona una ruta">
+    <!-- Asegúrate de que el nombreRuta se muestra correctamente y se selecciona correctamente -->
+    <ion-select-option *ngFor="let ubicacion of (ubicaciones$ | async)" [value]="ubicacion.nombreRuta">
+      {{ ubicacion.nombreRuta }}
+    </ion-select-option>
+  </ion-select>
+</ion-item>
 
+<ion-item>
+  <ion-select label="Estado Viaje" placeholder="Seleccione Estado">
+    <ion-select-option value="Disponible">Disponible</ion-select-option>
+    <ion-select-option value="En Camino">En Camino</ion-select-option>
+    <ion-select-option value="Finalizado">Finalizado</ion-select-option>
+  </ion-select>
+</ion-item>
 
 <!--PATENTE-->
 <app-custom-input autocomplete="patente" 
@@ -40,18 +56,7 @@ label="Patente Vehiculo"
 
 
 
-<!-- Punto de destino-->
-    <app-custom-input autocomplete="subname" 
-    [control]="form.controls.subname"
-    type="text"
-    label="Destino"
-    ></app-custom-input>
-    
-<!-- Validadores del Nombre-->
-    <div class="validators" *ngIf="form.controls.subname.errors && form.controls.subname.touched">
-      <div *ngIf="form.controls.subname.errors?.['required']"> Este Campo es Requerido </div>
-      <div *ngIf="form.controls.subname.errors?.['minLenght']">Al menos 4 Caracteres.</div>
-    </div>
+
 
     <!-- Price-->
     <app-custom-input
