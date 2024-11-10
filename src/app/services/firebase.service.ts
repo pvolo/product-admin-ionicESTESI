@@ -9,6 +9,7 @@ import { UtilsService } from './utils.service';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
 import{getStorage,uploadString,ref,getDownloadURL,deleteObject} from "firebase/storage"
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 
 
@@ -65,6 +66,19 @@ export class FirebaseService {
 
 
     //========= BASE DE DATOS ============
+
+
+
+  // Obtener la ubicación por nombreRuta del usuario
+  getUbicacionPorNombreRuta(uid: string, nombreRuta: string): Observable<any> {
+    return this.firestore
+      .collection(`users/${uid}/ubicaciones`, ref => ref.where('nombreRuta', '==', nombreRuta))
+      .valueChanges()
+      .pipe(
+        map(ubicaciones => ubicaciones.length > 0 ? ubicaciones[0] : null) // Asume que hay solo una ubicación por nombreRuta
+      );
+  }
+
 
     //====Obtener Documentos de una Coleccion
 
@@ -172,6 +186,20 @@ updateProductSoldUnits(uid: string, productId: string, soldUnits: number) {
   getUbicacionesDeUsuario(userId: string): Observable<any[]> {
     return this.firestore.collection(`users/${userId}/ubicaciones`).valueChanges(); // Correcto, solo recuperamos los datos
   }
+
+ // Método para obtener el UID del usuario logueado
+ getCurrentUserUid(): Observable<string | null> {
+  return this.auth.authState.pipe(
+    // 'authState' emite el usuario cuando cambia
+    map(user => user ? user.uid : null)
+  );
+}
+
+// Método para obtener las reservaciones de un usuario por su UID
+getUserReservations(uid: string): Observable<any[]> {
+  const reservationsRef = this.firestore.collection(`users/${uid}/reservations`);
+  return reservationsRef.valueChanges();
+}
 
 }
 

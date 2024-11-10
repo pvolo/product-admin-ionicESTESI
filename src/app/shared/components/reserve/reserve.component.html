@@ -5,16 +5,18 @@
   <ion-card-content class="card-content">
     <form [formGroup]="form" (ngSubmit)="reserveSeats()">
       <ion-item class="form-item">
-        <ion-label position="floating" class="form-item">Asientos a Reservar <br></ion-label> <br>
+        <ion-label position="floating" class="form-item">Asientos a Reservar <br></ion-label>
         <ion-input type="number" formControlName="seats" class="input-field" placeholder="Ingrese el número de asientos"></ion-input>
       </ion-item>
       <ion-button expand="full" type="submit" [disabled]="form.invalid" class="submit-button" color="warning">
-      <ion-button type="submit" [disabled]="form.invalid" class="submit-button">
         Reservar
       </ion-button>
     </form>
     <ion-buttons slot="center" class="close-buttons">
-      <ion-button (click)="cerrarModal()" class="close-button">Cerrar</ion-button>
+      <ion-button (click)="cerrarModal()" class="close-button" color="secondary">Cerrar</ion-button>
     </ion-buttons>
-  </ion-card-content>
+    <div class="card-content">
+      <div id="map" style="height: 300px; width: 100%; margin-bottom: 20px;"></div></div>
+    
+    </ion-card-content>
 </ion-card>
