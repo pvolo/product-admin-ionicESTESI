@@ -10,17 +10,11 @@
       display-format="DD/MM/YYYY"
       picker-format="DD/MM/YYYY"
       presentation="date"
-      [(ngModel)]="user.birthdate"
-    ></ion-datetime>
+      [(ngModel)]="user.birthdate">
+    </ion-datetime>
   </ion-item>
-  <ion-button expand="block" (click)="savePersonalData()" color="warning">Guardar </ion-button>
-  <ion-footer>
-    <ion-button expand="full" (click)="volverAlInicio()" color="warning">Volver </ion-button>
-    <ion-button expand="full" (click)="volverAlInicio()" color="warning">Volver</ion-button>
-
-  <ion-button expand="block" class="custom-small-rounded-button-save" (click)="savePersonalData()">Guardar</ion-button>
+  <ion-button expand="block" (click)="savePersonalData()" color="warning">Guardar</ion-button>
   <ion-footer>
     <ion-button expand="block" class="custom-small-rounded-button-back" (click)="volverAlInicio()">Volver</ion-button>
   </ion-footer>
-  
-  </ion-content>
+</ion-content>

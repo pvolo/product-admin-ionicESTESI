@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 
 import { HistorialPageRoutingModule } from './historial-routing.module';
+import { ReservationsModalComponent } from 'src/app/shared/components/reservations-modal/reservations-modal.component'; // Importa el modal
 
 import { HistorialPage } from './historial.page';
 import { SharedModule } from 'src/app/shared/shared.module';
@@ -17,6 +18,6 @@ import { SharedModule } from 'src/app/shared/shared.module';
     HistorialPageRoutingModule,
     SharedModule
   ],
-  declarations: [HistorialPage]
+  declarations: [HistorialPage,ReservationsModalComponent]
 })
 export class HistorialPageModule {}

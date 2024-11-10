@@ -1,0 +1,15 @@
+<app-header [isModal]="true" title="Mis Reservaciones"></app-header>
+
+
+
+<ion-content>
+  <ion-list>
+    <ion-item *ngFor="let reservation of reservations">
+      <ion-label>
+        <strong>Nombre Ruta: <h2>{{ reservation.productName }}</h2></strong>
+        <p>Asientos Reservados: {{ reservation.reservedSeats }}</p>
+        <p>Fecha: </p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>
