@@ -4,6 +4,6 @@ export interface Reservation {
     vehicleId: string; // ID del vehículo reservado
     userId: string; // UID del usuario que realiza la reserva
     userName: string; // Nombre del usuario que realiza la reserva
-    reservationDate: Date;
+    departureTime?: Date;
   }
   
