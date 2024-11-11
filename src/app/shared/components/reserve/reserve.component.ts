@@ -49,54 +49,70 @@ export class ReserveComponent implements OnInit {
   }
 
   initializeMap(origen: { lat: number, lng: number }, destino: { lat: number, lng: number }) {
+    // Inicializar el mapa de Mapbox
     this.map = new mapboxgl.Map({
       container: 'map', // ID del contenedor en el HTML
       style: 'mapbox://styles/mapbox/streets-v11',
-      center: [origen.lng, origen.lat], // Centra el mapa en el punto de origen
+      center: [origen.lng, origen.lat], // Centrar el mapa en el punto de origen
       zoom: 13
     });
   
-    // Marcador para el origen
+    // Desactivar la interacción del usuario en el mapa
+    this.map.scrollZoom.enable();
+    this.map.boxZoom.disable();
+    this.map.dragRotate.disable();
+    this.map.dragPan.enable();
+    this.map.keyboard.disable();
+    this.map.doubleClickZoom.disable();
+    this.map.touchZoomRotate.enable();
+  
+    // Agregar marcadores de origen y destino
     new mapboxgl.Marker({ color: 'green' })
       .setLngLat([origen.lng, origen.lat])
       .setPopup(new mapboxgl.Popup().setText('Origen'))
       .addTo(this.map);
   
-    // Marcador para el destino
     new mapboxgl.Marker({ color: 'red' })
       .setLngLat([destino.lng, destino.lat])
       .setPopup(new mapboxgl.Popup().setText('Destino'))
       .addTo(this.map);
   
-    // Añadir línea de conexión entre los puntos
-    this.map.addSource('route', {
-      type: 'geojson',
-      data: {
-        type: 'Feature',
-        geometry: {
-          type: 'LineString',
-          coordinates: [
-            [origen.lng, origen.lat],
-            [destino.lng, destino.lat]
-          ]
-        },
-        properties: {} // Añadido para cumplir con el tipo esperado
-      }
-    });
-      this.map.addLayer({
-        id: 'route',
-        type: 'line',
-        source: 'route',
-        layout: {
-          'line-join': 'round',
-          'line-cap': 'round'
-        },
-        paint: {
-          'line-color': '#ff8800', // Color de la línea
-          'line-width': 4
-        }
-      });
-    };
+    // Utilizar la API de rutas de Mapbox para obtener el camino entre origen y destino
+    const directionsRequest = `https://api.mapbox.com/directions/v5/mapbox/driving/${origen.lng},${origen.lat};${destino.lng},${destino.lat}?geometries=geojson&access_token=${(mapboxgl as any).accessToken}`;
+  
+    fetch(directionsRequest)
+      .then(response => response.json())
+      .then(data => {
+        const route = data.routes[0].geometry;
+        
+        // Agregar la ruta como una capa en el mapa
+        this.map.addSource('route', {
+          type: 'geojson',
+          data: {
+            type: 'Feature',
+            geometry: route,
+            properties: {} // Agregar una propiedad vacía
+          }
+        });
+        
+  
+        this.map.addLayer({
+          id: 'route',
+          type: 'line',
+          source: 'route',
+          layout: {
+            'line-join': 'round',
+            'line-cap': 'round'
+          },
+          paint: {
+            'line-color': '#ff8800',
+            'line-width': 4
+          }
+        });
+      })
+      .catch(error => console.error('Error fetching directions:', error));
+  }
+;
   
 
   async reserveSeats() {
@@ -119,7 +135,7 @@ export class ReserveComponent implements OnInit {
         userEmail: this.user.email,
         reservedSeats,
         productId: this.product.id,
-        productName: this.product.name
+        productName: this.product.nombreRuta
       };
 
       // Guardar la reserva en Firebase

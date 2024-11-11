@@ -33,4 +33,5 @@ export class ReservationsModalComponent implements OnInit {
   close() {
     this.modalCtrl.dismiss();
   }
+  
 }
