@@ -38,8 +38,8 @@ export class ReserveComponent implements OnInit {
 
   ngOnInit() {
     if (this.product && this.product.nombreRuta) {
-      // Carga los datos de la ubicación asociados a la ruta
-      this.routeData$ = this.firebaseSvc.getUbicacionPorNombreRuta(this.user.uid, this.product.nombreRuta);
+      // Cargar los datos de la ubicación asociados a la ruta sin filtrar por UID
+      this.routeData$ = this.firebaseSvc.getUbicacionPorNombreRuta(this.product.nombreRuta);
       this.routeData$.subscribe(route => {
         if (route) {
           this.initializeMap(route.origen, route.destino);
