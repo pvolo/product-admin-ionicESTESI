@@ -15,7 +15,7 @@
   
     <ion-card mode="ios" color="secondary" class="d-flex-center ion-text-center small-card right-aligned-card" *ngIf="!loading && products.length">
       <div class="card-content">
-        <h5>GANANCIAS ESPERADAS: <br> {{getProfits()}}</h5>
+        <h5>GANANCIAS PENDIENTE: <br> {{getProfits()}}</h5>
       </div>
     </ion-card>
   </div>
@@ -29,7 +29,7 @@
           <img [src]="p.image" />
         </ion-avatar>
         <ion-label>
-          <div class="name"><strong style="color: #FFB800;">CONDUCTOR:</strong>{{user()?.name}}</div>
+          <div class="name"><strong style="color: #FFB800;">CONDUCTOR: </strong>{{user()?.name}}</div>
           <div class="data">
             <strong>Patente: {{ p.patente }}</strong> <br>
             <strong>Destino: {{ p.nombreRuta }}</strong> <br>
