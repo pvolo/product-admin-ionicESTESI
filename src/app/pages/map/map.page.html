@@ -4,11 +4,12 @@
   <div class="container">
     <div class="form-container">
       <ion-input placeholder="Nombre de la Ruta" [(ngModel)]="routeName"></ion-input>
-      <ion-button (click)="saveRoute()">Guardar Ubicación</ion-button>
+      <ion-button (click)="saveRoute()" color="warning">Guardar Ubicación</ion-button>
     </div>
     <div id="map" class="map-container"></div> <!-- Contenedor del mapa -->
+    <ion-footer>
+      <ion-button expand="full" (click)="volverAlInicio()" color="warning">Volver</ion-button>
+    </ion-footer>
   </div>
-  <ion-footer>
-    <ion-button expand="full" (click)="volverAlInicio()">Volver</ion-button>
-  </ion-footer>
+
 </ion-content>

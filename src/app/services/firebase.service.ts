@@ -70,12 +70,13 @@ export class FirebaseService {
 
 
   // Obtener la ubicación por nombreRuta del usuario
-  getUbicacionPorNombreRuta(uid: string, nombreRuta: string): Observable<any> {
+  getUbicacionPorNombreRuta(nombreRuta: string): Observable<any> {
+    // Realizar una consulta en todas las subcolecciones 'ubicaciones' de los usuarios
     return this.firestore
-      .collection(`users/${uid}/ubicaciones`, ref => ref.where('nombreRuta', '==', nombreRuta))
+      .collectionGroup('ubicaciones', ref => ref.where('nombreRuta', '==', nombreRuta))  // Consulta a nivel global por nombreRuta
       .valueChanges()
       .pipe(
-        map(ubicaciones => ubicaciones.length > 0 ? ubicaciones[0] : null) // Asume que hay solo una ubicación por nombreRuta
+        map(ubicaciones => ubicaciones.length > 0 ? ubicaciones[0] : null)  // Asume que hay solo una ubicación por nombreRuta
       );
   }
 
@@ -84,11 +85,7 @@ export class FirebaseService {
 
     getCollectionData(path: string, collectionQuery?: any) {
       const ref = collection(getFirestore(), path);
-      const queryRef = query(ref, ...collectionQuery);
-      
-      collectionData(queryRef, { idField: 'id' }).subscribe(data => {
-        console.log('Datos obtenidos de Firebase:', data); // Verifica qué datos se están obteniendo
-      });
+      const queryRef = collectionQuery ? query(ref, ...collectionQuery) : ref;  // Aplica la query si se pasa
     
       return collectionData(queryRef, { idField: 'id' });
     }
@@ -201,6 +198,15 @@ getUserReservations(uid: string): Observable<any[]> {
   return reservationsRef.valueChanges();
 }
 
+
+
+
+
+
+getRutasDeUsuario(userUid: string): Observable<any[]> {
+  const rutasRef = collection(getFirestore(), `users/${userUid}/ubicaciones`);
+  return collectionData(rutasRef, { idField: 'id' }) as Observable<any[]>;
+}
 }
 
 
