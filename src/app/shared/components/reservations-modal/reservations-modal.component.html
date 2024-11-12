@@ -8,7 +8,8 @@
       <ion-label>
         <strong>Nombre Ruta: <h2>{{ reservation.productName }}</h2></strong>
         <p>Asientos Reservados: {{ reservation.reservedSeats }}</p>
-        <p>Fecha: </p>
+        <p>Fecha: {{ reservation.reservationDate }} </p>
+        <p>Conductor: {{ reservation.productCreatorName }} </p>
       </ion-label>
     </ion-item>
   </ion-list>

@@ -115,47 +115,51 @@ export class ReserveComponent implements OnInit {
 ;
   
 
-  async reserveSeats() {
-    if (this.form.valid) {
-      const reservedSeats = this.form.controls['seats'].value;
+async reserveSeats() {
+  if (this.form.valid) {
+    const reservedSeats = this.form.controls['seats'].value;
 
-      if (reservedSeats > this.product.soldUnits) {
-        this.utilsSvc.presentToast({
-          message: 'Asientos insuficientes',
-          color: 'danger',
-          duration: 2000
-        });
-        return;
-      }
-
-      // Crear la reserva
-      const reservation = {
-        userUid: this.user.uid,
-        userName: this.user.name,
-        userEmail: this.user.email,
-        reservedSeats,
-        productId: this.product.id,
-        productName: this.product.nombreRuta
-      };
-
-      // Guardar la reserva en Firebase
-      const reservationPath = `users/${this.user.uid}/reservations`;
-      await this.firebaseSvc.addDocument(reservationPath, reservation);
-
-      // Actualizar las unidades vendidas del producto
-      const updatedSoldUnits = this.product.soldUnits - reservedSeats;
-      if (updatedSoldUnits >= 0) {
-        await this.firebaseSvc.updateProductSoldUnits(this.product.userUid, this.product.id, updatedSoldUnits);
-      }
-
-      this.utilsSvc.dismissModal({ success: true });
+    if (reservedSeats > this.product.soldUnits) {
       this.utilsSvc.presentToast({
-        message: 'Reserva realizada con éxito',
-        color: 'success',
+        message: 'Asientos insuficientes',
+        color: 'danger',
         duration: 2000
       });
+      return;
     }
+
+    // Crear la reserva con el nombre del creador del producto
+    const reservation = {
+      userUid: this.user.uid,
+      userName: this.user.name,
+      userEmail: this.user.email,
+      reservedSeats: reservedSeats,
+      productId: this.product.id,
+      productName: this.product.nombreRuta,
+      reservationDate: new Date().toISOString(), // Almacenar la fecha de la reserva
+      productCreatorUid: this.product.userUid, // UID del creador del producto
+      productCreatorName: this.product.userName // Nombre del creador del producto
+    };
+
+    // Guardar la reserva en Firebase
+    const reservationPath = `users/${this.user.uid}/reservations`;
+    await this.firebaseSvc.addDocument(reservationPath, reservation);
+
+    // Actualizar las unidades vendidas del producto
+    const updatedSoldUnits = this.product.soldUnits - reservedSeats;
+    if (updatedSoldUnits >= 0) {
+      await this.firebaseSvc.updateProductSoldUnits(this.product.userUid, this.product.id, updatedSoldUnits);
+    }
+
+    this.utilsSvc.dismissModal({ success: true });
+    this.utilsSvc.presentToast({
+      message: 'Reserva realizada con éxito',
+      color: 'success',
+      duration: 2000
+    });
   }
+}
+
 
   async cerrarModal() {
     await this.modalController.dismiss();

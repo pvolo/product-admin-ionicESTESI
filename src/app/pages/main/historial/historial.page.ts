@@ -36,4 +36,7 @@ export class HistorialPage implements OnInit {
       }).then((modal) => modal.present());
     });
   }
+
+
+  
 }
