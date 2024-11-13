@@ -70,7 +70,7 @@ export class MapPage implements OnInit {
         { lat: destination[1], lng: destination[0] }, 
         this.routeName
       ).then(() => {
-        alert('Ubicación guardada exitosamente!');
+        alert('Ubicación guardada exitosamente! Puedes Cerrar esta pestaña');
       }).catch((error) => {
         console.error(error);
         alert('Error al guardar la ubicación.');

@@ -7,21 +7,20 @@
 h1{
     margin-top: 0;
 }
-/* Definir la animación de salto */
 @keyframes bounce {
     0% {
       transform: translateY(0);
     }
     50% {
-      transform: translateY(-20px); /* Ajusta la altura del salto */
+      transform: translateY(-20px);
     }
     100% {
       transform: translateY(0);
     }
   }
   
-  /* Clase que aplicará la animación */
+
   .bounce-animation {
-    animation: bounce 1s ease-out; /* Duración de 1 segundo */
+    animation: bounce 1s ease-out; 
   }
   

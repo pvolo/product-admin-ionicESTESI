@@ -26,15 +26,9 @@ export class UtilsService {
   }
 
   async init() {
-    // Inicializa el almacenamiento
     const storage = await this.storage.create();
     this._storage = storage;
   }
-
-
-
-
-
   async takePicture(promptLabelHeader: string){
   return await Camera.getPhoto({
     quality: 90,
@@ -50,8 +44,7 @@ export class UtilsService {
 
 
 
-  //====Alert
-
+  //====Alerta
 async presentAlert(opts?: AlertOptions) {
   const alert = await this.alertCtrl.create(opts);
 
@@ -68,10 +61,10 @@ async presentAlert(opts?: AlertOptions) {
 
 
     //====TOAST 
-  async presentToast(opts?: ToastOptions) {
-    const toast = await this.toastCtrl.create(opts);
-    toast.present();
-  }
+    async presentToast(opts?: ToastOptions) {
+      const toast = await this.toastCtrl.create(opts);
+      toast.present();
+    }
 
 
 
@@ -100,7 +93,7 @@ async presentAlert(opts?: AlertOptions) {
       await modal.present();
 
       const {data} = await modal.onWillDismiss();
-      if (data) return (data);
+      if (data) return (data);     
     }
 
     dismissModal(data?: any){

@@ -20,7 +20,6 @@ export class PersonalDataPage {
   }
 
   async savePersonalData() {
-    // Validación de RUT
     const rutPattern = /^[0-9]{7,9}$/;
     if (!rutPattern.test(this.user.rut)) {
       this.utilsSvc.presentToast({
@@ -33,7 +32,6 @@ export class PersonalDataPage {
       return;
     }
   
-  // Validar Edad
   const birthdate = new Date(this.user.birthdate);
   const currentDate = new Date();
   

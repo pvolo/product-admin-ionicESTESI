@@ -15,10 +15,12 @@
     ></app-custom-input>
     
 <!-- Validadores del Email-->
+
     <div class="validators" *ngIf="form.controls.email.errors && form.controls.email.touched">
       <div *ngIf="form.controls.email.errors?.['required']"> El Correo Es Obligatorio</div>
       <div *ngIf="form.controls.email.errors?.['email']"> Ingrese un Correo Valido</div>
     </div>
+    
 <!-- PASSWORD-->
 
    <app-custom-input

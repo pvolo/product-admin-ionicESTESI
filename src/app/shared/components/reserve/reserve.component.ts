@@ -38,7 +38,6 @@ export class ReserveComponent implements OnInit {
 
   ngOnInit() {
     if (this.product && this.product.nombreRuta) {
-      // Cargar los datos de la ubicación asociados a la ruta sin filtrar por UID
       this.routeData$ = this.firebaseSvc.getUbicacionPorNombreRuta(this.product.nombreRuta);
       this.routeData$.subscribe(route => {
         if (route) {
@@ -49,15 +48,14 @@ export class ReserveComponent implements OnInit {
   }
 
   initializeMap(origen: { lat: number, lng: number }, destino: { lat: number, lng: number }) {
-    // Inicializar el mapa de Mapbox
     this.map = new mapboxgl.Map({
-      container: 'map', // ID del contenedor en el HTML
+      container: 'map',
       style: 'mapbox://styles/mapbox/streets-v11',
-      center: [origen.lng, origen.lat], // Centrar el mapa en el punto de origen
+      center: [origen.lng, origen.lat], 
       zoom: 13
     });
   
-    // Desactivar la interacción del usuario en el mapa
+   
     this.map.scrollZoom.enable();
     this.map.boxZoom.disable();
     this.map.dragRotate.disable();
@@ -66,7 +64,7 @@ export class ReserveComponent implements OnInit {
     this.map.doubleClickZoom.disable();
     this.map.touchZoomRotate.enable();
   
-    // Agregar marcadores de origen y destino
+    // Marcadores de origen y destino
     new mapboxgl.Marker({ color: 'green' })
       .setLngLat([origen.lng, origen.lat])
       .setPopup(new mapboxgl.Popup().setText('Origen'))
@@ -77,7 +75,6 @@ export class ReserveComponent implements OnInit {
       .setPopup(new mapboxgl.Popup().setText('Destino'))
       .addTo(this.map);
   
-    // Utilizar la API de rutas de Mapbox para obtener el camino entre origen y destino
     const directionsRequest = `https://api.mapbox.com/directions/v5/mapbox/driving/${origen.lng},${origen.lat};${destino.lng},${destino.lat}?geometries=geojson&access_token=${(mapboxgl as any).accessToken}`;
   
     fetch(directionsRequest)
@@ -85,13 +82,12 @@ export class ReserveComponent implements OnInit {
       .then(data => {
         const route = data.routes[0].geometry;
         
-        // Agregar la ruta como una capa en el mapa
         this.map.addSource('route', {
           type: 'geojson',
           data: {
             type: 'Feature',
             geometry: route,
-            properties: {} // Agregar una propiedad vacía
+            properties: {} 
           }
         });
         
@@ -128,7 +124,6 @@ async reserveSeats() {
       return;
     }
 
-    // Crear la reserva con el nombre del creador del producto
     const reservation = {
       userUid: this.user.uid,
       userName: this.user.name,
@@ -136,16 +131,17 @@ async reserveSeats() {
       reservedSeats: reservedSeats,
       productId: this.product.id,
       productName: this.product.nombreRuta,
-      reservationDate: new Date().toISOString(), // Almacenar la fecha de la reserva
-      productCreatorUid: this.product.userUid, // UID del creador del producto
-      productCreatorName: this.product.userName // Nombre del creador del producto
+      reservationDate: new Date().toISOString(), 
+      productCreatorUid: this.product.userUid, 
+      productCreatorName: this.product.userName,
+      productState :this.product.estadoViaje
     };
 
     // Guardar la reserva en Firebase
     const reservationPath = `users/${this.user.uid}/reservations`;
     await this.firebaseSvc.addDocument(reservationPath, reservation);
 
-    // Actualizar las unidades vendidas del producto
+    // Actualizar las  disp. del vehiculo
     const updatedSoldUnits = this.product.soldUnits - reservedSeats;
     if (updatedSoldUnits >= 0) {
       await this.firebaseSvc.updateProductSoldUnits(this.product.userUid, this.product.id, updatedSoldUnits);

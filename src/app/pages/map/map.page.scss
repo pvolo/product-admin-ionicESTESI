@@ -21,21 +21,21 @@ ion-input {
 
 .map-container {
   width: 100%;
-  height: calc(100% - 80px); /* Resta altura del header y form-container */
+  height: calc(100% - 80px); 
 }
 
 .mapboxgl-ctrl-bottom-left,
 .mapboxgl-ctrl-bottom-right,
 .mapboxgl-ctrl-group {
-  display: none !important; /* Oculta los botones innecesarios */
+  display: none !important; 
 }
 
 .mapbox-directions-component-keyline {
-  display: none; /* Oculta la línea separadora */
+  display: none; 
 }
 
 .mapbox-directions-steps {
-  display: none; /* Oculta las instrucciones paso a paso */
+  display: none; 
 }
 
 .mapbox-directions-route-summary {
@@ -45,5 +45,5 @@ ion-input {
 }
 
 .mapboxgl-map {
-  height: 100%; /* Utiliza toda la altura disponible */
+  height: 100%;
 }

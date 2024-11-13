@@ -3,7 +3,7 @@ import { ReservationsModalComponent } from 'src/app/shared/components/reservatio
 import { Component, inject, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { FirebaseService } from 'src/app/services/firebase.service';
-import { Observable } from 'rxjs';  // Necesario para manejar los observables
+import { Observable } from 'rxjs';  
 
 @Component({
   selector: 'app-historial',
@@ -11,10 +11,10 @@ import { Observable } from 'rxjs';  // Necesario para manejar los observables
   styleUrls: ['./historial.page.scss'],
 })
 export class HistorialPage implements OnInit {
-  firebaseSvc = inject(FirebaseService);  // Inyectamos FirebaseService
-  modalCtrl = inject(ModalController);  // Inyectamos ModalController
+  firebaseSvc = inject(FirebaseService);  
+  modalCtrl = inject(ModalController);  
 
-  userUid$: Observable<string | null> = this.firebaseSvc.getCurrentUserUid();  // Aquí obtenemos el UID como un observable
+  userUid$: Observable<string | null> = this.firebaseSvc.getCurrentUserUid();  
 
   constructor() {}
 
@@ -27,11 +27,11 @@ export class HistorialPage implements OnInit {
         return;
       }
 
-      // Pasamos el userUid como parte de componentProps al modal
+      
       this.modalCtrl.create({
         component: ReservationsModalComponent,
         componentProps: {
-          userUid: userUid,  // Pasamos el UID al modal
+          userUid: userUid, 
         },
       }).then((modal) => modal.present());
     });

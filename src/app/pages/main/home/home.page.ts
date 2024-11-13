@@ -5,7 +5,7 @@ import { FirebaseService } from 'src/app/services/firebase.service';
 import { UtilsService } from 'src/app/services/utils.service';
 import { AddUpdateProductComponent } from 'src/app/shared/components/add-update-product/add-update-product.component';
 import { orderBy,where } from 'firebase/firestore';
-import { Router } from '@angular/router'; // Importar Router
+import { Router } from '@angular/router'; 
 
 @Component({
   selector: 'app-home',
@@ -15,7 +15,7 @@ import { Router } from '@angular/router'; // Importar Router
 export class HomePage implements OnInit {
   fireBaseSvs = inject(FirebaseService);
   utilsSvc = inject(UtilsService);
-  router = inject(Router); // Inyectar Router
+  router = inject(Router); 
 
   products:Product[] = [];
   loading:boolean=false;
@@ -49,12 +49,6 @@ return this.products.reduce((index,product)=>index + product.price * product.sol
 
 
 }
-
-
-
-
-
-
 
   //====Obtener los Productos
   getProducts() {

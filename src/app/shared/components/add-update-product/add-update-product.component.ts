@@ -6,6 +6,7 @@ import { FirebaseService } from 'src/app/services/firebase.service';
 import { UtilsService } from 'src/app/services/utils.service';
 import { Router } from '@angular/router'; // Importar Router
 import { Observable } from 'rxjs';
+import { ModalController } from '@ionic/angular';
 
 @Component({
   selector: 'app-add-update-product',
@@ -14,15 +15,23 @@ import { Observable } from 'rxjs';
 })
 export class AddUpdateProductComponent implements OnInit {
   @Input() product: Product;
-
+  constructor(
+    private modalController: ModalController
+  ){}
   form = new FormGroup({
     id: new FormControl(''),
     image: new FormControl('', [Validators.required]),
-    patente: new FormControl('', [Validators.required, Validators.minLength(7)]),
+    patente: new FormControl('', [Validators.required, Validators.minLength(7),
+    Validators.maxLength(7),
+    Validators.pattern('^[A-Za-z0-9]{7}$')  
+  ]),  
+
     price: new FormControl(null, [Validators.required, Validators.min(1)]),
     soldUnits: new FormControl(null, [Validators.required, Validators.min(1)]),
     departureTime: new FormControl('', [Validators.required]),
-    nombreRuta: new FormControl('', [Validators.required]) // Asegúrate de que nombreRuta esté en el formulario
+    nombreRuta: new FormControl('', [Validators.required]), 
+    estadoViaje: new FormControl('', [Validators.required]) 
+
   });
 
   firebaseSvc = inject(FirebaseService);
@@ -44,7 +53,8 @@ export class AddUpdateProductComponent implements OnInit {
         price: this.product.price,
         soldUnits: this.product.soldUnits,
         departureTime: this.product.departureTime,
-        nombreRuta: this.product.nombreRuta  // Asegúrate de incluir nombreRuta
+        nombreRuta: this.product.nombreRuta,
+        estadoViaje: this.product.estadoViaje || '' // Aquí podría estar el problema
       });
     }
     
@@ -166,4 +176,10 @@ export class AddUpdateProductComponent implements OnInit {
   irAMap() {
     this.router.navigate(['/map']);
   }
+
+
+  async cerrarModal() {
+    await this.modalController.dismiss();
+  }
+
 }

@@ -10,13 +10,13 @@ ion-content{
 
 
 .small-card {
-    width: 200px; /* Ajusta el tamaño según sea necesario */
+    width: 200px; 
     height: 150px;
     max-width: 100%;
 }
 
 .left-aligned-card {
-    margin-left: 0; /* Alinea el card a la izquierda */
+    margin-left: 0; 
 }
 
 .card-content {
@@ -28,13 +28,13 @@ ion-content{
 }
 
 .small-card {
-    width: 200px; /* Ajusta el tamaño según sea necesario */
+    width: 200px;
     height: 150px;
     max-width: 100%;
 }
 
 .right-aligned-card {
-    margin-left: auto; /* Alinea el card a la derecha */
+    margin-left: auto; 
 }
 
 .card-content {
@@ -47,13 +47,13 @@ ion-content{
 
 .card-container {
     display: flex;
-    justify-content: space-between; /* O 'center', dependiendo de cómo quieras que se alineen */
-    align-items: center; /* Alinea verticalmente los elementos si es necesario */
+    justify-content: space-between; 
+    align-items: center; 
 }
 
 .small-card {
     width: 500px;
     height: 100px;
-    margin: 0 5px; /* Espaciado entre los cards */
+    margin: 0 5px;
     margin-top: 20px;
 }

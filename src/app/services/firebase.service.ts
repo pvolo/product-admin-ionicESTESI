@@ -63,11 +63,7 @@ export class FirebaseService {
 
 
 
-
-
     //========= BASE DE DATOS ============
-
-
 
   // Obtener la ubicación por nombreRuta del usuario
   getUbicacionPorNombreRuta(nombreRuta: string): Observable<any> {
@@ -124,7 +120,6 @@ export class FirebaseService {
 
 
     //=======================================Almacenamiento
-
     //====Subir Imagen
     async uploadImage(path: string, data_url:string){
       return uploadString(ref(getStorage(),path),data_url,'data_url').then(()=>{
@@ -144,26 +139,18 @@ export class FirebaseService {
 
     deleteFile(path:string){
       return deleteObject(ref(getStorage(),path))
-
-
-
-
     }
 
   //==== Obtener los productos de todos los usuarios
   getAllProducts() {
     
-    // Primero obtenemos todos los usuarios
-    const usersRef = collection(getFirestore(), 'users'); // Reemplaza 'users' por tu ruta correcta si es diferente
+    const usersRef = collection(getFirestore(), 'users'); 
     const usersQuery = query(usersRef);
 
     return collectionData(usersQuery, { idField: 'uid' });
-     // Devuelve los usuarios
   }
 
-  //==== Obtener los productos de un usuario específico
   getUserProducts(uid: string) {
-    // Obtenemos los productos de la subcolección de un usuario
     const productsRef = collection(getFirestore(), `users/${uid}/products`);
     const productsQuery = query(productsRef, orderBy('soldUnits', 'desc'));
     
@@ -171,42 +158,38 @@ export class FirebaseService {
   }
 
 
-// Método para actualizar los asientos vendidos de un producto
+// Actualizar los asientos vendidos de un producto
 updateProductSoldUnits(uid: string, productId: string, soldUnits: number) {
   const productRef = doc(getFirestore(), `users/${uid}/products/${productId}`);
   return updateDoc(productRef, { soldUnits });
 }
 
-
-
-  // Método para obtener las ubicaciones del usuario
+  // Obtener las ubicaciones del usuario
   getUbicacionesDeUsuario(userId: string): Observable<any[]> {
     return this.firestore.collection(`users/${userId}/ubicaciones`).valueChanges(); // Correcto, solo recuperamos los datos
   }
 
- // Método para obtener el UID del usuario logueado
+ // Obtener el UID del usuario logueado
  getCurrentUserUid(): Observable<string | null> {
   return this.auth.authState.pipe(
-    // 'authState' emite el usuario cuando cambia
     map(user => user ? user.uid : null)
   );
 }
 
-// Método para obtener las reservaciones de un usuario por su UID
+// Obtener las reservaciones de un usuario por su UID
 getUserReservations(uid: string): Observable<any[]> {
   const reservationsRef = this.firestore.collection(`users/${uid}/reservations`);
   return reservationsRef.valueChanges();
 }
 
-
-
-
-
-
+//Obtener rutas del user 
 getRutasDeUsuario(userUid: string): Observable<any[]> {
   const rutasRef = collection(getFirestore(), `users/${userUid}/ubicaciones`);
   return collectionData(rutasRef, { idField: 'id' }) as Observable<any[]>;
 }
+
+
+
 }
 
 

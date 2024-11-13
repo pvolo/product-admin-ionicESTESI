@@ -16,6 +16,7 @@
     ></app-custom-input>
     
 <!-- Validadores del Nombre-->
+ 
     <div class="validators" *ngIf="form.controls.name.errors && form.controls.name.touched">
       <div *ngIf="form.controls.name.errors?.['required']"> Este Campo es Requerido</div>
       <div *ngIf="form.controls.name.errors?.['minLenght']">Al menos 4 Caracteres.</div>
@@ -32,6 +33,7 @@
     ></app-custom-input>
     
 <!-- Validadores del Email-->
+
     <div class="validators" *ngIf="form.controls.email.errors && form.controls.email.touched">
       <div *ngIf="form.controls.email.errors?.['required']"> El Correo Es Obligatorio</div>
       <div *ngIf="form.controls.email.errors?.['email']"> Ingrese un Correo Valido</div>
