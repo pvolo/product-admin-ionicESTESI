@@ -4,14 +4,14 @@
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
 
-  <ion-card mode="ios" color="secondary" class="d-flex-center ion-text-center small-card" *ngIf="!loading && products.length">
+  <ion-card mode="ios" color="secondary" class="d-flex-center ion-text-center small-card" *ngIf="!loading && filteredProducts.length">
     <div class="card-content">
-      <h5>VIAJES DISPONIBLES: <br> {{products.length}}</h5>
+      <h5>VIAJES DISPONIBLES: <br> {{ filteredProducts.length }}</h5>
     </div>
   </ion-card>
 
   <ion-list *ngIf="!loading">
-    <ion-item-sliding class="product-item" *ngFor="let p of products">
+    <ion-item-sliding class="product-item" *ngFor="let p of filteredProducts">
       <ng-container *ngIf="p.userUid !== user()?.uid">
         <ion-item>
           <ion-avatar slot="start">
@@ -22,10 +22,16 @@
               <strong style="color: #FFB800">CONDUCTOR:</strong>  {{ p.userName }}
             </div>
             <div class="data">
-              <strong>PATENTE: {{ p.patente }}</strong><br>
-              <strong>Nombre Ruta: {{ p.nombreRuta }}</strong><br>
-              <strong>Hora Salida: {{ p.departureTime }}</strong><br>
-              <strong>Asientos Disponibles:</strong> {{ p.soldUnits }}
+              <strong style="color: #800909">PATENTE: </strong> 
+              <strong style="font-weight: bold;color: rgb(187, 49, 15);"> {{ p.patente }}</strong><br>
+              <strong style="color: #2812a4">Nombre Ruta: </strong>
+              <strong style="font-weight: bold;color: blue;"> {{ p.nombreRuta }}</strong><br>
+              <strong style="color: #2812a4">Hora Salida: </strong>
+              <strong style="font-weight: bold;color: blue;"> {{ p.departureTime }}</strong><br>
+              <strong style="color: #2812a4">Asientos Disponibles: </strong>
+              <strong style="font-weight: bold;color: blue;"> {{ p.soldUnits }}</strong> <br>
+              <strong style="color: #2812a4">Estado: </strong>
+              <strong style="font-weight: bold;color: blue;"> {{ p.estadoViaje }} </strong>
             </div>
             <ion-chip color="warning" mode="ios" outline="true">
               <ion-label><b>Valor:</b> {{ p.price }}</ion-label>
@@ -41,7 +47,7 @@
       </ng-container>
     </ion-item-sliding>
   </ion-list>
-  <div *ngIf="!loading && !products.length" class="empty">
+  <div *ngIf="!loading && !filteredProducts.length" class="empty">
     <ion-icon name="car-outline"></ion-icon>
     <h3>No hay viajes disponibles!</h3>
   </div>

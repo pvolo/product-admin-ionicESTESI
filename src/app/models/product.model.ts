@@ -9,4 +9,6 @@ export interface Product{
         userName?: string;
         userUid: string;
         nombreRuta: string; 
+        estadoViaje:string;
+
 }
