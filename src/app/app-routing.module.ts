@@ -26,8 +26,6 @@ const routes: Routes = [
     path: 'personal-data',
     loadChildren: () => import('./pages/main/personal-data/personal-data.module').then( m => m.PersonalDataPageModule),canActivate:[AuthGuard]
   },
-
-
 ];
 
 @NgModule({

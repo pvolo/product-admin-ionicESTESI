@@ -5,7 +5,7 @@ import { FirebaseService } from 'src/app/services/firebase.service';
 import { UtilsService } from 'src/app/services/utils.service';
 import { AddUpdateProductComponent } from 'src/app/shared/components/add-update-product/add-update-product.component';
 import { orderBy,where } from 'firebase/firestore';
-import { Router } from '@angular/router'; // Importar Router
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -15,13 +15,10 @@ import { Router } from '@angular/router'; // Importar Router
 export class HomePage implements OnInit {
   fireBaseSvs = inject(FirebaseService);
   utilsSvc = inject(UtilsService);
-  router = inject(Router); // Inyectar Router
+  router = inject(Router);
 
   products:Product[] = [];
   loading:boolean=false;
-
-
-
 
   ngOnInit() {
   }
@@ -34,7 +31,6 @@ export class HomePage implements OnInit {
     this.getProducts();
   }
 
-
 doRefresh(event) {  
   setTimeout(() => {
   this.getProducts();
@@ -42,19 +38,10 @@ doRefresh(event) {
   }, 1000);
 }
 
-
   //====Obtener las Ganancias
 getProfits(){
 return this.products.reduce((index,product)=>index + product.price * product.soldUnits, 0)
-
-
 }
-
-
-
-
-
-
 
   //====Obtener los Productos
   getProducts() {
@@ -74,8 +61,6 @@ return this.products.reduce((index,product)=>index + product.price * product.sol
     });
   }
 
-
-
   //====Agregar o Actualizar Producto
   async addUpdateProduct(product?: Product){
 
@@ -88,9 +73,6 @@ return this.products.reduce((index,product)=>index + product.price * product.sol
     if(success)this.getProducts();
   }
 
-
-
-
 //====Confirmar Eliminacion del Producto
 
 async confirmDeleteProduct(product:Product) {
@@ -101,7 +83,6 @@ async confirmDeleteProduct(product:Product) {
     buttons: [
       {
         text: 'Cancelar',
-
       }, {
         text: 'Si, Eliminar',
         handler: () => {
@@ -110,30 +91,18 @@ async confirmDeleteProduct(product:Product) {
       }
     ]
   });
-
 }
-
-
-
-
 
   //====Eliminar Producto
 
   async deleteProduct(product:Product) {
     let path = `users/${this.user().uid}/products/${product.id}`
-  
     const loading = await this.utilsSvc.loading();
     await loading.present();
-  
     let imagePath=await this.fireBaseSvs.getFilePath(product.image);
     await this.fireBaseSvs.deleteFile(imagePath);
-  
-
-  
     this.fireBaseSvs.deleteDocument(path).then(async res => {
-      
       this.products=this.products.filter(p=>p.id!=product.id)
-  
       this.utilsSvc.presentToast({
         message:'Viaje Eliminado Exitosamente',
         duration: 2000,
@@ -141,10 +110,8 @@ async confirmDeleteProduct(product:Product) {
         position:'middle',
         icon:'checkmark-circle-outline'
       })
-  
     }).catch(error =>{
       console.log(error);
-  
       this.utilsSvc.presentToast({
         message: error.message,
         duration: 2500,
@@ -152,11 +119,9 @@ async confirmDeleteProduct(product:Product) {
         position:'middle',
         icon:'alert-circle-outline'
       })
-  
     }).finally(()=>{
       loading.dismiss();
     })
-  
   }
 
 

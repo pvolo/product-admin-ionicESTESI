@@ -40,8 +40,6 @@ export class TakecarPage implements OnInit {
   async getProducts() {
     this.loading = true;
     const allProducts: Product[] = [];
-  
-    // Aquí obtienes todos los productos desde Firebase
     this.firebaseSvc.getAllProducts().subscribe({
       next: async (users: any) => {
         for (let user of users) {
@@ -52,8 +50,6 @@ export class TakecarPage implements OnInit {
                 product.userUid = user.uid;
               });
               allProducts.push(...userProducts);
-  
-              // Guarda productos en el almacenamiento local
               await this.utilsSvc.saveInLocalStorage('products', allProducts);
               this.products = allProducts;
               this.loading = false;
@@ -68,8 +64,6 @@ export class TakecarPage implements OnInit {
       error: async (err) => {
         console.error('Error al obtener usuarios', err);
         this.loading = false;
-  
-        // Si hay error, intenta cargar desde almacenamiento local
         this.products = await this.utilsSvc.getFromLocalStorage('products') || [];
       }
     });
@@ -91,7 +85,6 @@ export class TakecarPage implements OnInit {
     });
   
     if (success) {
-      // Recargar los productos para reflejar los cambios de asientos disponibles
       this.getProducts();
     }
   }

@@ -5,14 +5,12 @@
   <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)" >
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
-
   <div class="card-container">
     <ion-card mode="ios" color="secondary" class="d-flex-center ion-text-center small-card left-aligned-card" *ngIf="!loading && products.length">
       <div class="card-content">
         <h5>VIAJES REGISTRADOS: <br> {{products.length}}</h5>
       </div>
     </ion-card>
-  
     <ion-card mode="ios" color="secondary" class="d-flex-center ion-text-center small-card right-aligned-card" *ngIf="!loading && products.length">
       <div class="card-content">
         <h5>GANANCIAS PENDIENTE: <br> {{getProfits()}}</h5>
@@ -45,15 +43,13 @@
       </ion-item>
 
     <!-- ==================== OPCIONES ==================== -->
+    
       <ion-item-options >
     <!-- ============= EDITAR ============== -->
-
         <ion-item-option (click)="addUpdateProduct(p)">
           <ion-icon class="option-btn" name="create-outline"></ion-icon>
         </ion-item-option>
-        
       <!-- =========== ELIMINAR =========== -->
-
         <ion-item-option (click)="confirmDeleteProduct(p)" color="danger">
           <ion-icon class="option-btn" name="trash-outline"></ion-icon>
         </ion-item-option>

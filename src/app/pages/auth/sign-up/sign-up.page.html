@@ -2,13 +2,9 @@
 <ion-content>
 
   <div class="d-flex-center">
-
   <form [formGroup]="form" class="auth-form" (ngSubmit)="submit()" (keypress.enter)="submit()">
-
     <app-logo></app-logo>
-
 <!-- NOMBRE-->
-
     <app-custom-input autocomplete="name" icon="person-outline"
     [control]="form.controls.name"
     type="text"
@@ -20,48 +16,31 @@
       <div *ngIf="form.controls.name.errors?.['required']"> Este Campo es Requerido</div>
       <div *ngIf="form.controls.name.errors?.['minLenght']">Al menos 4 Caracteres.</div>
     </div>
-
-
-
 <!-- EMAIL-->
-
     <app-custom-input autocomplete="email" icon="mail-outline"
     [control]="form.controls.email"
     type="email"
     label="Correo"
     ></app-custom-input>
-    
 <!-- Validadores del Email-->
     <div class="validators" *ngIf="form.controls.email.errors && form.controls.email.touched">
       <div *ngIf="form.controls.email.errors?.['required']"> El Correo Es Obligatorio</div>
       <div *ngIf="form.controls.email.errors?.['email']"> Ingrese un Correo Valido</div>
     </div>
-
-
 <!-- PASSWORD-->
-
   <app-custom-input
   [control]="form.controls.password"
   icon="lock-closed-outline"
   type="password" 
   label="Contraseña"
-  
     ></app-custom-input>
-    
-    
     <div class="validators" *ngIf="form.controls.password.errors && form.controls.password.touched">
       <div *ngIf="form.controls.password.errors?.['required']"> La Contraseña es Obligatoria</div>
     </div>
-
-
     <ion-button  expand="block"  mode="ios" class="submit" type="submit" [disabled]="form.invalid" color="warning">
       Registrarse
       <ion-icon slot="end" name="person-add-outline"></ion-icon>
     </ion-button>
-
-
   </form>
-
-
 </div>
 </ion-content>

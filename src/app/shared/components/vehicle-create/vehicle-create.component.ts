@@ -13,7 +13,7 @@ export class VehicleCreateComponent {
     destination: '',
     destinationCoords: null,
     createdBy: '',
-    startCoords: { latitude: 0, longitude: 0 } // Añadido startCoords con valores iniciales
+    startCoords: { latitude: 0, longitude: 0 }
   };
 
   constructor(private firestore: AngularFirestore,
@@ -21,19 +21,16 @@ export class VehicleCreateComponent {
   ) {}
 
   async saveVehicle() {
-    // Obtenemos la ubicación actual del usuario
     const position = await Geolocation.getCurrentPosition();
     this.vehicle.startCoords = {
       latitude: position.coords.latitude,
       longitude: position.coords.longitude
     };
 
-    // el ID del usuario logeado
     const user = await this.auth.currentUser;
     if (user) {
       this.vehicle.createdBy = user.uid; 
 
-      // Guardar el vehículo en Firebase
       await this.firestore.collection('vehicles').add(this.vehicle);
       console.log("Vehículo creado con éxito.");
     } else {

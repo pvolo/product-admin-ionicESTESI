@@ -15,9 +15,7 @@ export class ProfilePage implements OnInit {
   router = inject(Router);
   editableName: string;
   showAddPersonalData: boolean = true;
-
   isNameChanged: boolean = false;
-
   ngOnInit() {
     const user = this.user();
     if (user) {
@@ -25,39 +23,32 @@ export class ProfilePage implements OnInit {
       this.showAddPersonalData = !(user.rut && user.birthdate);
     }
   }
-
   user(): User {
     return this.utilsSvc.getFromLocalStorage('user');
   }
-
   goToPersonalData() {
     this.router.navigate(['../personal-data']);
   }
-
   onNameChange() {
     const originalName = this.user().name;
 this.isNameChanged = this.editableName.trim() !== originalName.trim() &&
 this.editableName.length > 0 && 
 this.editableName.length <= 15 &&
- !/\s/.test(this.editableName);
+!/\s/.test(this.editableName);
 }
 
   //===========TOMAR/SELECCIONAR UNA FOTO
+
   async takeImage() {
     let user = this.user();
     let path = `users/${user.uid}`;
-
     const dataUrl = (await this.utilsSvc.takePicture('Imagen del Perfil')).dataUrl;
-
     const loading = await this.utilsSvc.loading();
     await loading.present();
-
     let imagePath = `${user.uid}/profile`;
     user.image = await this.firebaseSvc.uploadImage(imagePath, dataUrl);
-
     this.firebaseSvc.updateDocument(path, { image: user.image }).then(async res => {
       this.utilsSvc.saveInLocalStorage('user', user);
-
       this.utilsSvc.presentToast({
         message: 'Imagen Actualizada Exitosamente',
         duration: 2000,
@@ -80,6 +71,7 @@ this.editableName.length <= 15 &&
   }
 
   //===========GUARDAR EL NOMBRE EDITADO
+
   async saveName() {
     if (!this.editableName.trim()) {
       this.utilsSvc.presentToast({
@@ -91,7 +83,6 @@ this.editableName.length <= 15 &&
       });
       return; 
     }
-
 // Validar que el nombre solo contenga letras y no espacios
 if (!/^[a-zA-Z]{1,15}$/.test(this.editableName)) {
   this.utilsSvc.presentToast({
@@ -103,18 +94,14 @@ if (!/^[a-zA-Z]{1,15}$/.test(this.editableName)) {
   });
   return; 
 }
-
 let user = this.user();
 let path = `users/${user.uid}`;
 user.name = this.editableName;
-
 const loading = await this.utilsSvc.loading();
 await loading.present();
-
 this.firebaseSvc.updateDocument(path, { name: user.name }).then(async res => {
   this.utilsSvc.saveInLocalStorage('user', user);
   this.isNameChanged = false; 
-
   this.utilsSvc.presentToast({
     message: 'Nombre Actualizado Exitosamente',
     duration: 2000,
