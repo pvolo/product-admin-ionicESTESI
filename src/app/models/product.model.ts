@@ -1,6 +1,5 @@
 export interface Product{
 
-    
         image: string
         price: number,
         patente:string,
@@ -10,8 +9,4 @@ export interface Product{
         userName?: string;
         userUid: string;
         nombreRuta: string; 
-        
-    
-
-
 }

@@ -12,7 +12,6 @@
 
   <ion-list *ngIf="!loading">
     <ion-item-sliding class="product-item" *ngFor="let p of products">
-      <!-- Verificamos si el uid del usuario es diferente al uid del creador del producto -->
       <ng-container *ngIf="p.userUid !== user()?.uid">
         <ion-item>
           <ion-avatar slot="start">
@@ -34,7 +33,6 @@
             </ion-chip>
           </ion-label>
         </ion-item>
-  
         <ion-item-options>
           <ion-item-option (click)="reserveProduct(p)" color="success">
             <ion-icon name="thumbs-up-outline"></ion-icon>
@@ -43,14 +41,13 @@
       </ng-container>
     </ion-item-sliding>
   </ion-list>
-
-  
   <div *ngIf="!loading && !products.length" class="empty">
     <ion-icon name="car-outline"></ion-icon>
     <h3>No hay viajes disponibles!</h3>
   </div>
 
   <!-- =========== CARGA EN PRODUCTOS =========== -->
+  
   <ion-list *ngIf="loading">
     <ion-item class="product-item" *ngFor="let p of [1,1,1,1,1,1,1,1]">
       <ion-avatar slot="start">

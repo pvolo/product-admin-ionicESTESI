@@ -11,27 +11,27 @@ import { Reservation } from '../../../models/reservation.model';
 })
 export class VehicleListComponent implements OnInit {
   vehicles: Vehicle[] = [];
-  userId: string | null = null; // Variable para almacenar el ID del usuario
-  userName: string | null = null; // Variable para almacenar el nombre del usuario
+  userId: string | null = null;
+  userName: string | null = null;
 
   constructor(
     private offlineStorage: OfflineStorageService,
     private firestore: AngularFirestore,
-    private auth: AngularFireAuth // Inyectamos AngularFireAuth directamente
+    private auth: AngularFireAuth
   ) {}
 
   async ngOnInit() {
-    await this.getUserData(); // Obtener ID y nombre del usuario logeado
-    await this.loadVehicles(); // Cargar los vehículos disponibles
-    this.syncVehicles(); // Sincronizar vehículos desde Firebase
-    this.syncReservations(); // Sincronizar reservas desde Firebase
+    await this.getUserData();
+    await this.loadVehicles();
+    this.syncVehicles();
+    this.syncReservations();
   }
 
   async getUserData() {
     const user = await this.auth.currentUser;
     if (user) {
-      this.userId = user.uid; // Guardamos el ID del usuario
-      this.userName = user.displayName; // Guardamos el nombre del usuario
+      this.userId = user.uid;
+      this.userName = user.displayName;
     } else {
       console.error("No se pudo obtener el usuario logeado.");
     }
@@ -42,19 +42,17 @@ export class VehicleListComponent implements OnInit {
     if (vehicles.length) {
       this.vehicles = vehicles;
     } else if (this.userId) {
-      // Filtrar vehículos para excluir los creados por el usuario logeado
       this.firestore.collection<Vehicle>('vehicles', ref => ref.where('createdBy', '!=', this.userId))
         .valueChanges()
         .subscribe((data: Vehicle[]) => {
           this.vehicles = data;
-          this.offlineStorage.saveVehicles(data); // Guardamos los vehículos en almacenamiento offline
+          this.offlineStorage.saveVehicles(data);
         });
     }
   }
 
   async reserveSeat(vehicleId: string) {
     if (this.userId && this.userName) {
-      // Agregamos la reserva a Firebase
       await this.firestore.collection<Reservation>('reservations').add({
         vehicleId: vehicleId,
         userId: this.userId,
@@ -69,13 +67,13 @@ export class VehicleListComponent implements OnInit {
 
   syncVehicles() {
     this.firestore.collection<Vehicle>('vehicles').valueChanges().subscribe(async vehicles => {
-      await this.offlineStorage.saveVehicles(vehicles); // Guardamos los vehículos en el almacenamiento offline
+      await this.offlineStorage.saveVehicles(vehicles);
     });
   }
 
   syncReservations() {
     this.firestore.collection<Reservation>('reservations').valueChanges().subscribe(async reservations => {
-      await this.offlineStorage.saveReservations(reservations); // Guardamos las reservas en el almacenamiento offline
+      await this.offlineStorage.saveReservations(reservations);
     });
   }
 }

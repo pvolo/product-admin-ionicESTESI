@@ -16,9 +16,6 @@ export class MainPage implements OnInit {
     {title:'Pasajero', url:'/main/takecar',icon:'bus'},
     {title:'Perfil', url:'/main/profile',icon:'person-outline'},
     {title:'Historial', url:'/main/historial',icon:'time-outline'},
-
-
-
   ]
 
   router= inject(Router);
@@ -26,26 +23,15 @@ export class MainPage implements OnInit {
   utilsSvc = inject(UtilsService);
   currentPath:string='';
 
-
-
   ngOnInit() {
     this.router.events.subscribe((event:any)=>{
       if (event?.url) this.currentPath = event.url
     })
   }
 
-
-
-
-  //==========Datos del Usuario
   user():User{
     return this.utilsSvc.getFromLocalStorage('user');
   }
-
-
-
-
-//==========Cerrar Sesion
 
 signOut(){
   this.fireBaseSvs.signOut();

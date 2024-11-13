@@ -5,11 +5,9 @@
     <img *ngIf="user()?.image" [src]="user()?.image" />
     <ion-icon *ngIf="!user()?.image" class="empty-icon" name="person-circle-outline"></ion-icon>
   </ion-avatar>
-
   <ion-button class="photo-btn" (click)="takeImage()" mode="ios" size="small" shape="round" color="warning">
     <ion-icon name="camera-outline" color="secondary"></ion-icon>
   </ion-button>
-
   <ion-item>
     <ion-label position="stacked">Nombre</ion-label>
     <ion-input [(ngModel)]="editableName" (ngModelChange)="onNameChange()"></ion-input>
@@ -18,18 +16,14 @@
     <ion-icon slot="start" name="save-outline" ></ion-icon>
     Guardar Nombre
   </ion-button>
-
-
   <ion-item *ngIf="showAddPersonalData" button detail (click)="goToPersonalData()">
     <ion-icon color="primary" slot="start" name="document-outline"></ion-icon>
     <ion-label>Añadir Datos Personales</ion-label>
   </ion-item>
-
   <ion-item *ngIf="user()?.rut">
     <ion-label position="stacked">RUN</ion-label>
     <ion-text>{{ user()?.rut }}</ion-text>
   </ion-item>
-
   <ion-item *ngIf="user()?.birthdate">
     <ion-label position="stacked">Fecha de Nacimiento</ion-label>
     <ion-text>{{ user()?.birthdate }}</ion-text>

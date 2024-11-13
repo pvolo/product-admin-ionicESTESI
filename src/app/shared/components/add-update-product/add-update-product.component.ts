@@ -4,7 +4,7 @@ import { Product } from 'src/app/models/product.model';
 import { User } from 'src/app/models/user.model';
 import { FirebaseService } from 'src/app/services/firebase.service';
 import { UtilsService } from 'src/app/services/utils.service';
-import { Router } from '@angular/router'; // Importar Router
+import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -22,21 +22,20 @@ export class AddUpdateProductComponent implements OnInit {
     price: new FormControl(null, [Validators.required, Validators.min(1)]),
     soldUnits: new FormControl(null, [Validators.required, Validators.min(1)]),
     departureTime: new FormControl('', [Validators.required]),
-    nombreRuta: new FormControl('', [Validators.required]) // Asegúrate de que nombreRuta esté en el formulario
+    nombreRuta: new FormControl('', [Validators.required])
   });
 
   firebaseSvc = inject(FirebaseService);
   utilsSvc = inject(UtilsService);
-  router = inject(Router); // Inyectar Router
+  router = inject(Router);
 
   user = {} as User;
-  ubicaciones$!: Observable<any[]>; // Esta variable almacenará las ubicaciones del usuario.
+  ubicaciones$!: Observable<any[]>;
 
   ngOnInit() {
     this.user = this.utilsSvc.getFromLocalStorage('user');
     
     if (this.product) {
-      // Si existe un producto, establece el valor del formulario, incluyendo la ruta
       this.form.setValue({
         id: this.product.id,
         image: this.product.image,
@@ -44,19 +43,19 @@ export class AddUpdateProductComponent implements OnInit {
         price: this.product.price,
         soldUnits: this.product.soldUnits,
         departureTime: this.product.departureTime,
-        nombreRuta: this.product.nombreRuta  // Asegúrate de incluir nombreRuta
+        nombreRuta: this.product.nombreRuta
       });
     }
     
-    this.loadUbicaciones();  // Carga las ubicaciones del usuario
+    this.loadUbicaciones();
   }
 
   loadUbicaciones() {
-    // Obtenemos las ubicaciones del usuario almacenadas en Firebase desde la subcolección 'ubicaciones'
     this.ubicaciones$ = this.firebaseSvc.getUbicacionesDeUsuario(this.user.uid);
   }
 
   //===========TOMAR/SELECCIONAR UNA FOTO
+
   async takeImage() {
     const dataUrl = (await this.utilsSvc.takePicture('Imagen del Viaje')).dataUrl;
     this.form.controls.image.setValue(dataUrl);
@@ -70,6 +69,7 @@ export class AddUpdateProductComponent implements OnInit {
   }
 
   //================ Convertir valores de tipo str a numb
+
   setNumberInputs() {
     let { soldUnits, price } = this.form.controls;
     if (soldUnits.value) soldUnits.setValue(parseFloat(soldUnits.value));
@@ -77,25 +77,23 @@ export class AddUpdateProductComponent implements OnInit {
   }
 
   //================ CREAR PRODUCTO
+
   async createProduct() {
     let path = `users/${this.user.uid}/products`;
-
     const loading = await this.utilsSvc.loading();
     await loading.present();
 
     //========= SUBIR IMAGEN Y OBTENER URL ============
+
     let dataUrl = this.form.value.image;
     let imagePath = `${this.user.uid}/${Date.now()}`;
     let imageUrl = await this.firebaseSvc.uploadImage(imagePath, dataUrl);
     this.form.controls.image.setValue(imageUrl);
-
     const newProduct = {
       ...this.form.value,
       userUid: this.user.uid
     };
-
     delete newProduct.id;
-
     this.firebaseSvc.addDocument(path, newProduct).then(async res => {
       this.utilsSvc.dismissModal({ success: true });
       this.utilsSvc.presentToast({
@@ -120,26 +118,22 @@ export class AddUpdateProductComponent implements OnInit {
   }
 
   //================ ACTUALIZAR PRODUCTO
+
   async updateProduct() {
     let path = `users/${this.user.uid}/products/${this.product.id}`;
-  
     const loading = await this.utilsSvc.loading();
     await loading.present();
-  
     if (this.form.value.image !== this.product.image) {
       let dataUrl = this.form.value.image;
       let imagePath = await this.firebaseSvc.getFilePath(this.product.image);
       let imageUrl = await this.firebaseSvc.uploadImage(imagePath, dataUrl);
       this.form.controls.image.setValue(imageUrl);
     }
-  
     const updatedProduct = {
       ...this.form.value,
       userUid: this.user.uid
     };
-  
     delete updatedProduct.id;
-  
     this.firebaseSvc.updateDocument(path, updatedProduct).then(async res => {
       this.utilsSvc.dismissModal({ success: true });
       this.utilsSvc.presentToast({
@@ -162,7 +156,6 @@ export class AddUpdateProductComponent implements OnInit {
       loading.dismiss();
     });
   }
-
   irAMap() {
     this.router.navigate(['/map']);
   }

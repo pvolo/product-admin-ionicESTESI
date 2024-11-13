@@ -1,9 +1,7 @@
 <ion-header class="ion-no-border">
   <ion-toolbar color="secondary">
     <ion-button slot="start" color="secondary">
-      <!---------------------- BACK BUTTON --------------------------->
       <ion-back-button *ngIf="backButton" [defaultHref]="backButton" style="height: 60px; width: 60px"></ion-back-button>
-      <!---------------------- DISMISS MODAL --------------------------->
       <ion-button (click)="dismissModal()" *ngIf="isModal" color="warning">
         <ion-icon name="close-circle-outline"></ion-icon>
     </ion-button>

@@ -10,8 +10,6 @@
     <img [src]="form.value.image" />
   </ion-avatar>
 
-
-
 <!--  Si no existe imagen -->
 <ion-icon class="image-icon" *ngIf="!form.value.image" name="image-outline"></ion-icon>
 <br>
@@ -20,8 +18,6 @@
 <ion-button (click)="takeImage()" mode="ios" size="small" shape="round" color="warning">
   <br color="secondary">  Tomar/Seleccionar <br> <br>
 </ion-button>
-
-
 
 <!--MARCAR UBICACIONES-->
 <ion-item button detail (click)="irAMap()">
@@ -88,6 +84,7 @@ label="Patente Vehiculo"
     </div>    
 
     <!-- Hora de salida -->
+    
     <ion-item>
       <ion-label>Hora de Salida</ion-label>
       <ion-datetime
@@ -97,13 +94,10 @@ label="Patente Vehiculo"
         formControlName="departureTime">
       </ion-datetime>
     </ion-item>
-
     <ion-button   mode="ios" class="ion-margin" type="submit" [disabled]="form.invalid" color="warning"> <strong color="secondary">
     {{ product ? 'Actualizar Viaje': 'Agregar Viaje'}} </strong>
       <ion-icon slot="end" name="checkmark-circle-outline"></ion-icon>
     </ion-button>
-
-
   </form>
 
 

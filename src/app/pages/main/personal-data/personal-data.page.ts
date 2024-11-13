@@ -13,14 +13,11 @@ export class PersonalDataPage {
   firebaseSvc = inject(FirebaseService);
   utilsSvc = inject(UtilsService);
   user: User;
-
   constructor(private router: Router ) {
     this.user = this.utilsSvc.getFromLocalStorage('user');
     
   }
-
   async savePersonalData() {
-    // Validación de RUT
     const rutPattern = /^[0-9]{7,9}$/;
     if (!rutPattern.test(this.user.rut)) {
       this.utilsSvc.presentToast({
@@ -34,15 +31,14 @@ export class PersonalDataPage {
     }
   
   // Validar Edad
+
   const birthdate = new Date(this.user.birthdate);
   const currentDate = new Date();
-  
   const age = currentDate.getFullYear() - birthdate.getFullYear();
   const isBirthdayPassedThisYear =
     currentDate.getMonth() > birthdate.getMonth() ||
     (currentDate.getMonth() === birthdate.getMonth() &&
       currentDate.getDate() >= birthdate.getDate());
-
   if (age < 18 || (age === 18 && !isBirthdayPassedThisYear)) {
     this.utilsSvc.presentToast({
       message: 'Debes ser mayor de 18 años.',
@@ -53,13 +49,10 @@ export class PersonalDataPage {
     });
     return; 
   }
-
   const formattedBirthdate = `${birthdate.getDate().toString().padStart(2, '0')}/${(birthdate.getMonth() + 1).toString().padStart(2, '0')}/${birthdate.getFullYear()}`;
   this.user.birthdate = formattedBirthdate;
-
   const loading = await this.utilsSvc.loading();
   await loading.present();
-
   const path = `users/${this.user.uid}`;
   this.firebaseSvc.updateDocument(path, {
     rut: this.user.rut,

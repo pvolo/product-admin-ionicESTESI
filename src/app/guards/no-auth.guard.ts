@@ -13,7 +13,7 @@ export class NoAuthGuard implements CanActivate{
   utilsSvc = inject(UtilsService);
 
   canActivate(route: ActivatedRouteSnapshot,
-     state: RouterStateSnapshot): Observable<boolean | UrlTree>| Promise<boolean| UrlTree>| boolean| UrlTree {
+    state: RouterStateSnapshot): Observable<boolean | UrlTree>| Promise<boolean| UrlTree>| boolean| UrlTree {
 
     
 

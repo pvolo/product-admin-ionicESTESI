@@ -7,21 +7,13 @@ import { UtilsService } from 'src/app/services/utils.service';
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent  implements OnInit {
-
   @Input() title!: string;
   @Input() backButton!: string;
   @Input() isModal!:boolean;
   @Input() showMenu!:boolean;
-
-
   utilsSvc = inject(UtilsService);
-
-
   ngOnInit() {}
-
   dismissModal(){
     this.utilsSvc.dismissModal();
   }
-
-
 }

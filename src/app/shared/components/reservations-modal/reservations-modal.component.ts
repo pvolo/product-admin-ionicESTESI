@@ -8,19 +8,16 @@ import { FirebaseService } from 'src/app/services/firebase.service';
   styleUrls: ['./reservations-modal.component.scss'],
 })
 export class ReservationsModalComponent implements OnInit {
-  reservations: any[] = [];  // Array para almacenar las reservaciones
-  @Input() userUid: string = '';  // Recibimos el UID como un Input
-
+  reservations: any[] = [];
+  @Input() userUid: string = '';
   constructor(
     private modalCtrl: ModalController,
     private firebaseSvc: FirebaseService
   ) {}
-
   async ngOnInit() {
     if (this.userUid) {
-      // Obtenemos las reservaciones
       this.firebaseSvc.getUserReservations(this.userUid).subscribe(reservations => {
-        console.log('Reservaciones obtenidas:', reservations); // Verifica si estamos recibiendo los datos
+        console.log('Reservaciones obtenidas:', reservations);
         this.reservations = reservations;
       }, error => {
         console.error('Error al obtener las reservaciones:', error);
@@ -29,7 +26,6 @@ export class ReservationsModalComponent implements OnInit {
       console.error('No se pudo obtener el UID del usuario');
     }
   }
-
   close() {
     this.modalCtrl.dismiss();
   }
