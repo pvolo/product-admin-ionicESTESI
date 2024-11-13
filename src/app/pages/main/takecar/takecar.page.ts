@@ -17,8 +17,11 @@ export class TakecarPage implements OnInit {
 
   products: Product[] = [];
   loading = false;
+  userUid: string;
+
 
   ngOnInit() {
+    this.userUid = this.user()?.uid;
     this.getProducts();
   }
 
@@ -96,5 +99,15 @@ export class TakecarPage implements OnInit {
   isValidPatente(patente: string): boolean {
     const patenteRegex = /^[A-Za-z0-9]{1,7}$/;
     return patenteRegex.test(patente);
+  }
+
+
+  get filteredProducts(): Product[] {
+    return this.products.filter(p => 
+      p.userUid !== this.user()?.uid && 
+      p.estadoViaje !== 'Finalizado' && 
+      p.estadoViaje !== 'En Camino' && 
+      this.isValidPatente(p.patente)
+    );
   }
 }
