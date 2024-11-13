@@ -128,7 +128,9 @@ async reserveSeats() {
       productName: this.product.nombreRuta,
       reservationDate: new Date().toISOString(),
       productCreatorUid: this.product.userUid,
-      productCreatorName: this.product.userName
+      productCreatorName: this.product.userName,
+      productState :this.product.estadoViaje
+
     };
 
     const reservationPath = `users/${this.user.uid}/reservations`;

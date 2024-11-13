@@ -3,10 +3,12 @@
   <ion-list>
     <ion-item *ngFor="let reservation of reservations">
       <ion-label>
-        <strong>Nombre Ruta: <h2>{{ reservation.productName }}</h2></strong>
+        <strong  style="color: #FFB800;">Nombre Ruta: </strong><strong style="color: #000000;font-weight: bold;"> <h2>{{ reservation.productName }}</h2></strong>
         <p>Asientos Reservados: {{ reservation.reservedSeats }}</p>
         <p>Fecha: {{ reservation.reservationDate }} </p>
         <p>Conductor: {{ reservation.productCreatorName }} </p>
+        <p>Estado Reservado: {{ reservation.productState }} </p>
+
       </ion-label>
     </ion-item>
   </ion-list>
