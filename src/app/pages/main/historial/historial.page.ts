@@ -4,6 +4,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { FirebaseService } from 'src/app/services/firebase.service';
 import { Observable } from 'rxjs';
+import { VehicleComponent } from 'src/app/shared/components/vehicle/vehicle.component';
 
 @Component({
   selector: 'app-historial',
@@ -14,8 +15,10 @@ export class HistorialPage implements OnInit {
   firebaseSvc = inject(FirebaseService);
   modalCtrl = inject(ModalController);
   userUid$: Observable<string | null> = this.firebaseSvc.getCurrentUserUid();
-  constructor() {}
+  constructor(private modalController: ModalController) {}
   ngOnInit() {}
+
+
   async openReservationsModal() {
     this.userUid$.subscribe((userUid) => {
       if (!userUid) {
@@ -31,4 +34,13 @@ export class HistorialPage implements OnInit {
     });
   }
   
+  async openVehicleModal() {
+    const modal = await this.modalController.create({
+      component: VehicleComponent,
+    });
+    return await modal.present();
+  }
+
+
+
 }
