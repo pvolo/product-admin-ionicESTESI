@@ -7,11 +7,12 @@ import { IonicModule } from '@ionic/angular';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AddUpdateProductComponent } from './components/add-update-product/add-update-product.component';
 import { ReserveComponent } from './components/reserve/reserve.component';
+import { VehicleComponent } from './components/vehicle/vehicle.component';
 
 
 
 @NgModule({
-  declarations: [HeaderComponent,CustomInputComponent,LogoComponent,AddUpdateProductComponent,ReserveComponent],
+  declarations: [HeaderComponent,CustomInputComponent,LogoComponent,AddUpdateProductComponent,ReserveComponent,VehicleComponent],
   exports:[HeaderComponent,CustomInputComponent,LogoComponent,AddUpdateProductComponent,ReactiveFormsModule,ReserveComponent],
   imports: [
     CommonModule,
