@@ -4,11 +4,11 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { getAuth,signInWithEmailAndPassword,createUserWithEmailAndPassword,updateProfile,sendPasswordResetEmail } from 'firebase/auth';
 import { User } from '../models/user.model';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { getFirestore,setDoc,doc, getDoc,addDoc,collection,collectionData,query,updateDoc,deleteDoc, orderBy } from '@angular/fire/firestore';
+import { getFirestore,setDoc,doc, getDoc,getDocs,addDoc,collection,collectionData,query,updateDoc,deleteDoc, orderBy,where } from '@angular/fire/firestore';
 import { UtilsService } from './utils.service';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
 import{getStorage,uploadString,ref,getDownloadURL,deleteObject} from "firebase/storage"
-import { Observable } from 'rxjs';
+import { from, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 
@@ -194,8 +194,14 @@ updateProductSoldUnits(uid: string, productId: string, soldUnits: number) {
 
 // Método para obtener las reservaciones de un usuario por su UID
 getUserReservations(uid: string): Observable<any[]> {
-  const reservationsRef = this.firestore.collection(`users/${uid}/reservations`);
-  return reservationsRef.valueChanges();
+  const reservationsRef = collection(getFirestore(), 'reservados');
+  
+  const q = query(reservationsRef, where('userUid', '==', uid));
+
+  return from(getDocs(q).then(querySnapshot => {
+    const reservas = querySnapshot.docs.map(doc => doc.data());
+    return reservas; 
+  }));
 }
 
 
@@ -207,8 +213,80 @@ getRutasDeUsuario(userUid: string): Observable<any[]> {
   const rutasRef = collection(getFirestore(), `users/${userUid}/ubicaciones`);
   return collectionData(rutasRef, { idField: 'id' }) as Observable<any[]>;
 }
+
+
+
+
+//PETICIONES
+
+// Método para agregar una solicitud de reserva
+addReservationRequest(uid: string, productId: string, request: any) {
+  const requestRef = collection(getFirestore(), `users/${uid}/products/${productId}/solicitudes`);
+  return addDoc(requestRef, request);
 }
 
+// Método para obtener las solicitudes pendientes de reserva
+getReservationRequests(uid: string, productId: string) {
+  const requestsRef = collection(getFirestore(), `users/${uid}/products/${productId}/solicitudes`);
+  return collectionData(requestsRef, { idField: 'id' });
+}
+
+
+
+
+
+//PROBANDO
+
+
+
+async addToReservados(userUid: string, productId: string, request: any) {
+  // Referencia a la colección "reservados"
+  const reservadosRef = collection(getFirestore(), 'reservados'); 
+  
+  await addDoc(reservadosRef, {
+    userUid: request.userUid,        
+    userName: request.userName,    
+    userEmail: request.userEmail,    
+    reservedSeats: request.reservedSeats,  
+    reservationDate: request.reservationDate, 
+    acceptedBy: userUid,            
+    productId: productId,            
+    productCreatorUid: request.productCreatorUid, 
+    productCreatorName: request.productCreatorName, 
+    productCreatorNameRuta: request.productCreatorNameRuta,
+    status: 'confirmed',             
+  });
+}
+
+// Eliminar una solicitud de reserva
+deleteReservationRequest(productCreatorUid: string, productId: string, requestId: string) {
+  const requestPath = `users/${productCreatorUid}/products/${productId}/solicitudes/${requestId}`;
+  return this.deleteDocument(requestPath);  
+}
+
+//Eliminar una solicitud rechazada
+async rejectRequest(requestId: string) {
+  const requestRef = this.firestore.collection('users').doc(requestId)
+    .collection('products').doc(requestId).collection('solicitudes').doc(requestId);
+  await requestRef.delete();
+}
+
+
+deleteDocumentt(requestId){
+  return deleteDoc(doc(getFirestore('solicitudes'),requestId));
+}  
+
+
+async deleteRequest(uid: string, productId: string, requestId: string) {
+  const requestRef = this.firestore.collection('users').doc(uid).collection('products').doc(productId).collection('solicitudes').doc(requestId);
+  console.log('Eliminando solicitud en:', requestRef.ref.path); 
+  await requestRef.delete();
+  console.log('Solicitud con ID', requestId, 'eliminada correctamente');
+}
+
+
+
+}
 
 
 

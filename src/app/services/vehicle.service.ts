@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Vehicle } from '../models/vehicle.model';
-import { Observable } from 'rxjs';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { map, take } from 'rxjs/operators';
+import { Observable, from, of, switchMap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -16,27 +17,61 @@ export class VehicleService {
   ) {}
 
   async addVehicle(matricula: string, nameCar: string): Promise<void> {
-    const user = this.auth.currentUser;
+    const user = await this.auth.currentUser;
     if (user) {
       const newVehicle: Vehicle = {
         matricula,
         nameCar,
-        userId: (await user).uid,
+        userId: user.uid,
         createdAt: new Date(),
       };
-      await this.vehiclesCollection.add(newVehicle);
+
+      // Verificar si la matrícula ya existe
+      const isUnique = await this.isMatriculaUnique(matricula);
+      if (isUnique) {
+        await this.vehiclesCollection.add(newVehicle);
+      } else {
+        throw new Error('La patente ya está registrada por otro usuario.');
+      }
     }
   }
 
-  getVehicles(): Observable<Vehicle[]> {
-    return this.vehiclesCollection.valueChanges({ idField: 'id' });
+  getVehiclesByUserId(): Observable<Vehicle[]> {
+    return from(this.auth.currentUser).pipe(
+      switchMap((user) => {
+        if (user) {
+          return this.firestore
+            .collection<Vehicle>('vehicles', (ref) =>
+              ref.where('userId', '==', user.uid)
+            )
+            .valueChanges({ idField: 'id' });
+        } else {
+          // Si no hay un usuario autenticado, devuelve un array vacío
+          return of([]);
+        }
+      })
+    );}
+
+    async updateVehicle(vehicleId: string, updatedData: Partial<Vehicle>): Promise<void> {
+      try {
+        await this.firestore.collection('vehicles').doc(vehicleId).update(updatedData);
+      } catch (error) {
+        console.error('Error al actualizar el vehículo:', error);
+      }
+    }
+
+  async isMatriculaUnique(matricula: string): Promise<boolean> {
+    const result = await this.firestore
+      .collection<Vehicle>('vehicles', (ref) => ref.where('matricula', '==', matricula))
+      .get()
+      .toPromise();
+
+    return result.empty;
   }
 
-  getVehiclesByUserId(userId: string): Observable<Vehicle[]> {
-    return this.firestore
-      .collection<Vehicle>('vehicles', (ref) =>
-        ref.where('userId', '==', userId)
-      )
-      .valueChanges({ idField: 'id' });
+
+  async deleteVehicle(vehicleId: string): Promise<void> {
+    await this.firestore.collection('vehicles').doc(vehicleId).delete();
   }
+  
 }

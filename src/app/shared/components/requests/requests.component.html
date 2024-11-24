@@ -1,0 +1,46 @@
+<app-header title="Solicitudes">
+  <ion-toolbar>
+    <ion-title>Solicitudes de Reservas</ion-title>
+  </ion-toolbar>
+</app-header>
+
+<ion-content>
+  <!-- Si hay solicitudes, se muestra esta tarjeta -->
+  <ion-card *ngIf="requests.length > 0">
+    <ion-card-header>
+      <ion-card-title>Solicitudes Pendientes</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-list>
+        <ion-item *ngFor="let request of requests">
+          <ion-label>
+            <h2>{{ request.userName }}</h2>
+            <p>{{ request.userEmail }}</p>
+            <p>Asientos reservados: {{ request.reservedSeats }}</p>
+            <p>Fecha: {{ request.reservationDate }}</p>
+          </ion-label>
+          <ion-buttons>
+            <!-- Botón de aceptar -->
+            <ion-button color="success" 
+                        (click)="updateRequestStatus(request.productCreatorUid, request.productId, request.id, 'accept')" 
+                        [disabled]="request.status !== 'pending'">
+              Aceptar
+            </ion-button>
+            <!-- Botón de rechazar -->
+            <ion-button color="danger" (click)="updateRequestStatus(request.productCreatorUid, request.productId, request.id, 'reject')" [disabled]="request.status !== 'pending'">
+              Rechazar
+            </ion-button>
+          </ion-buttons>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card *ngIf="requests.length === 0">
+    <ion-card-content style="text-align: center;">No hay Solicitudes Pendientes.</ion-card-content>
+  </ion-card>
+
+  <ion-button expand="block" fill="clear" shape="round" (click)="goToHome()">
+    VOLVER AL INICIO
+  </ion-button>
+</ion-content>

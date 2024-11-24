@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { NoAuthGuard } from './guards/no-auth.guard';
 import { AuthGuard } from './guards/auth.guard';
+import { RequestsComponent } from './shared/components/requests/requests.component';
 
 const routes: Routes = [
 
@@ -10,6 +11,7 @@ const routes: Routes = [
     redirectTo: 'auth',
     pathMatch: 'full'
   },
+  
   {
     path: 'auth',
     loadChildren: () => import('./pages/auth/auth.module').then( m => m.AuthPageModule), canActivate:[NoAuthGuard]
@@ -26,6 +28,7 @@ const routes: Routes = [
     path: 'personal-data',
     loadChildren: () => import('./pages/main/personal-data/personal-data.module').then( m => m.PersonalDataPageModule),canActivate:[AuthGuard]
   },
+  { path: 'requests', component: RequestsComponent },
 ];
 
 @NgModule({

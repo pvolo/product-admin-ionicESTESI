@@ -1,0 +1,18 @@
+<app-header [showMenu]="false" title="Mis Vehículos"> 
+</app-header>
+
+
+<ion-content class="ion-padding">
+  <ion-list>
+    <ion-item *ngFor="let vehicle of vehicles">
+      <ion-label>
+        <h2 style="font-weight: bold;">MODELO VEHICULO: </h2>
+          <p style="color: #FFB800;font-weight: bold;">{{ vehicle.nameCar }}</p> 
+        <p>PATENTE: <br> {{ vehicle.matricula }}</p>
+        <p></p>
+      </ion-label>
+      <ion-button color="danger" (click)="deleteVehicle(vehicle.id)">Eliminar</ion-button>
+    </ion-item>
+  </ion-list>
+  <ion-button color="warning" (click)="cerrarModal()">Cerrar</ion-button>
+</ion-content>

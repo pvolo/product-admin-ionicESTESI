@@ -3,6 +3,7 @@ import { ModalController } from '@ionic/angular';
 
 import { VehicleService } from '../../../services/vehicle.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MyVehiclesModalComponent } from '../my-vehicles-modal/my-vehicles-modal.component';
 
 @Component({
   selector: 'app-vehicle',
@@ -38,7 +39,12 @@ export class VehicleComponent {
     await this.modalController.dismiss();
   }
 
-
+  async openMyVehiclesModal() {
+    const modal = await this.modalController.create({
+      component: MyVehiclesModalComponent,
+    });
+    await modal.present();
+  }
 
 
 

@@ -17,7 +17,10 @@
       </div>
     </ion-card>
   </div>
-
+  <ion-item routerLink="/requests">
+    <ion-icon slot="start" name="list-outline"></ion-icon>
+    <ion-label> <strong>Ver Solicitudes de Reservas</strong></ion-label>
+  </ion-item>
       <!-- ============= productos ============== -->
 
   <ion-list *ngIf="!loading">
@@ -42,6 +45,7 @@
           </ion-chip>
         </ion-label>
         
+
       </ion-item>
 
     <!-- ==================== OPCIONES ==================== -->

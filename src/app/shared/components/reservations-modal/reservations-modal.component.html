@@ -1,13 +1,13 @@
 <app-header [isModal]="true" title="Mis Reservaciones"></app-header>
 <ion-content>
   <ion-list>
-    <ion-item *ngFor="let reservation of reservations">
+    <ion-item *ngFor="let reservation of reservados">
       <ion-label>
-        <strong  style="color: #FFB800;">Nombre Ruta: </strong><strong style="color: #000000;font-weight: bold;"> <h2>{{ reservation.productName }}</h2></strong>
+        <strong  style="color: #FFB800;">Nombre Ruta: </strong><strong style="color: #000000;font-weight: bold;"> <h2>{{ reservation.productCreatorNameRuta }}</h2></strong>
         <p>Asientos Reservados: {{ reservation.reservedSeats }}</p>
         <p>Fecha: {{ reservation.reservationDate }} </p>
         <p>Conductor: {{ reservation.productCreatorName }} </p>
-        <p>Estado Reservado: {{ reservation.productState }} </p>
+        <p>Estado Reservado: {{ reservation.status }} </p>
 
       </ion-label>
     </ion-item>

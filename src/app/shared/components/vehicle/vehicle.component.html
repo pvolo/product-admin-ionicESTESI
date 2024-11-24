@@ -15,10 +15,14 @@
       <ion-button expand="full" type="submit" [disabled]="vehicleForm.invalid" color="warning">
         Guardar Vehículo
       </ion-button>
-      <ion-button (click)="cerrarModal()" color="secondary">
-        Volver
-      </ion-button>
+
     </form>
+    <ion-button expand="full" color="primary" (click)="openMyVehiclesModal()" color="secondary">
+      Ver mis Vehiculos
+    </ion-button>
+    <ion-button (click)="cerrarModal()" color="secondary">
+      Cerrar
+    </ion-button>
   </div>
 </ion-content>
 
