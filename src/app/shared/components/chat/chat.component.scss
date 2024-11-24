@@ -1,0 +1,28 @@
+// Estilos globales para la cabecera
+ion-header {
+    background-color: #ffffff; 
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    padding: 0;
+    z-index: 10; 
+  
+    ion-toolbar {
+      --background: #0b213c; 
+      --color: white;
+      padding: 0 16px;
+  
+      ion-title {
+        font-size: 20px; 
+        font-weight: 600;
+        text-align: center;
+        letter-spacing: 0.5px; 
+      }
+    }
+  }
+  
+  ion-toolbar {
+    display: flex;
+    justify-content: space-between; 
+    align-items: center; 
+  }
+  
+  

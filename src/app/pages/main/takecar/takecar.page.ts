@@ -107,7 +107,10 @@ export class TakecarPage implements OnInit {
       p.userUid !== this.user()?.uid && 
       p.estadoViaje !== 'Finalizado' && 
       p.estadoViaje !== 'En Camino' && 
-      this.isValidPatente(p.patente)
+      this.isValidPatente(p.patente)&& 
+      p.soldUnits !== 0  
+
+      
     );
   }
 }

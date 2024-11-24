@@ -6,13 +6,13 @@
     <ion-label color="secondary">MIS VEHICULOS</ion-label>
   </ion-item>
       <br>
-      <ion-item button  detail>
-        <ion-icon color="warning" slot="start" name="download-outline"></ion-icon>
-        <ion-label color="secondary">LISTA RESERVADOS</ion-label>
+      <ion-item button (click)="openVerReservados()"  detail>
+        <ion-icon color="warning" slot="start" name="person-circle-outline"></ion-icon>
+        <ion-label color="secondary">USUARIOS ACEPTADOS</ion-label>
       </ion-item>
       <br>
       <ion-item button (click)="openReservationsModal()" detail>
-        <ion-icon color="warning" slot="start" name="man-outline"></ion-icon>
+        <ion-icon color="warning" slot="start" name="save-outline"></ion-icon>
         <ion-label color="secondary">HISTORIAL RESERVAS</ion-label>
       </ion-item>
 </ion-content>
