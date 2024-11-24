@@ -309,8 +309,18 @@ async deleteRequest(uid: string, productId: string, requestId: string) {
 
 
 
+//PARA EL CONDUCTOR
+getReservationsForConductor(conductorUid: string): Observable<any[]> {
+  const reservationsRef = collection(getFirestore(), 'reservados');
+  const q = query(reservationsRef, where('productCreatorUid', '==', conductorUid));
 
-
+  return from(
+    getDocs(q).then(querySnapshot => {
+      const reservas = querySnapshot.docs.map(doc => doc.data());
+      return reservas;
+    })
+  );
+}
 
 }
 

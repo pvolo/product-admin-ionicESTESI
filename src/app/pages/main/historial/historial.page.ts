@@ -5,6 +5,8 @@ import { ModalController } from '@ionic/angular';
 import { FirebaseService } from 'src/app/services/firebase.service';
 import { Observable } from 'rxjs';
 import { VehicleComponent } from 'src/app/shared/components/vehicle/vehicle.component';
+import { VerReservadosComponent } from 'src/app/shared/components/verreservados/verreservados.component';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
 
 @Component({
   selector: 'app-historial',
@@ -15,7 +17,10 @@ export class HistorialPage implements OnInit {
   firebaseSvc = inject(FirebaseService);
   modalCtrl = inject(ModalController);
   userUid$: Observable<string | null> = this.firebaseSvc.getCurrentUserUid();
-  constructor(private modalController: ModalController) {}
+  constructor(private modalController: ModalController,
+    private auth: AngularFireAuth 
+
+  ) {}
   ngOnInit() {}
 
 
@@ -42,5 +47,21 @@ export class HistorialPage implements OnInit {
   }
 
 
+  async openVerReservados() {
+    const user = await this.auth.currentUser;
+    if (user) {
+      const conductorUid = user.uid;
 
+    
+      const modal = await this.modalCtrl.create({
+        component: VerReservadosComponent,
+        componentProps: {
+          productCreatorUid: conductorUid 
+        }
+      });
+      await modal.present();
+    } else {
+      console.error('No se pudo obtener el UID del conductor');
+    }
+  }
 }

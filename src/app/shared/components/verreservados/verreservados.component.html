@@ -1,0 +1,18 @@
+<!-- verreservados.component.html -->
+<app-header [isModal]="true" title="Reservas Aceptadas"></app-header>
+<ion-content>
+  <ion-list>
+    <ion-item *ngFor="let reservation of reservados">
+      <ion-label>
+        <strong style="color: #FFB800;">Nombre: </strong>
+        <strong style="color: #000000;font-weight: bold;">
+          <h2>{{ reservation.userName }}</h2>
+        </strong>
+        <p>Email: {{ reservation.userEmail }}</p>
+        <p>Asientos Reservados: {{ reservation.reservedSeats }}</p>
+        <p>Fecha de Reserva: {{ reservation.reservationDate | date }}</p>
+        <p>Nombre Ruta: {{ reservation.productCreatorNameRuta }}</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>

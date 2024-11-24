@@ -6,6 +6,9 @@ import { UtilsService } from 'src/app/services/utils.service';
 import { AddUpdateProductComponent } from 'src/app/shared/components/add-update-product/add-update-product.component';
 import { orderBy,where } from 'firebase/firestore';
 import { Router } from '@angular/router';
+import { VerReservadosComponent } from 'src/app/shared/components/verreservados/verreservados.component';
+import { ModalController } from '@ionic/angular';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
 
 @Component({
   selector: 'app-home',
@@ -20,6 +23,12 @@ export class HomePage implements OnInit {
   products:Product[] = [];
   loading:boolean=false;
 
+
+
+  constructor(
+    private modalCtrl: ModalController,
+    private auth: AngularFireAuth 
+  ) {}
   ngOnInit() {
   }
 
@@ -124,6 +133,22 @@ async confirmDeleteProduct(product:Product) {
     })
   }
 
+  async openVerReservados() {
+    const user = await this.auth.currentUser;
+    if (user) {
+      const conductorUid = user.uid;
 
+    
+      const modal = await this.modalCtrl.create({
+        component: VerReservadosComponent,
+        componentProps: {
+          productCreatorUid: conductorUid 
+        }
+      });
+      await modal.present();
+    } else {
+      console.error('No se pudo obtener el UID del conductor');
+    }
+  }
 
 }

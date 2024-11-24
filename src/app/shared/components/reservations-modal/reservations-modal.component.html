@@ -8,7 +8,7 @@
         <p>Fecha: {{ reservation.reservationDate }} </p>
         <p>Conductor: {{ reservation.productCreatorName }} </p>
         <p>Estado Reservado: {{ reservation.status }} </p>
-
+        <ion-button expand="full" (click)="openChat(reservation)" color="secondary">Abrir Chat</ion-button>
       </ion-label>
     </ion-item>
   </ion-list>
