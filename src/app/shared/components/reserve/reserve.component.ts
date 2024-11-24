@@ -110,6 +110,7 @@ export class ReserveComponent implements OnInit {
 async reserveSeats() {
   if (this.form.valid) {
     const reservedSeats = this.form.controls['seats'].value;
+
     if (reservedSeats > this.product.soldUnits) {
       this.utilsSvc.presentToast({
         message: 'Asientos insuficientes',
@@ -119,35 +120,38 @@ async reserveSeats() {
       return;
     }
 
-    const reservation = {
+    const request = {
       userUid: this.user.uid,
       userName: this.user.name,
       userEmail: this.user.email,
       reservedSeats: reservedSeats,
-      productId: this.product.id,
-      productName: this.product.nombreRuta,
       reservationDate: new Date().toISOString(),
+      status: 'pending', 
       productCreatorUid: this.product.userUid,
       productCreatorName: this.product.userName,
-      productState :this.product.estadoViaje
-
+      productCreatorNameRuta: this.product.nombreRuta,   
+      productId: this.product.id,  
     };
 
-    const reservationPath = `users/${this.user.uid}/reservations`;
-    await this.firebaseSvc.addDocument(reservationPath, reservation);
+    await this.firebaseSvc.addReservationRequest(
+      this.product.userUid,
+      this.product.id,
+      request
+    );
 
-    const updatedSoldUnits = this.product.soldUnits - reservedSeats;
-    if (updatedSoldUnits >= 0) {
-      await this.firebaseSvc.updateProductSoldUnits(this.product.userUid, this.product.id, updatedSoldUnits);
-    }
-    this.utilsSvc.dismissModal({ success: true });
     this.utilsSvc.presentToast({
-      message: 'Reserva realizada con éxito',
+      message: 'Solicitud de reserva enviada al conductor',
       color: 'success',
       duration: 2000
     });
+
+    this.utilsSvc.dismissModal({ success: true });
   }
 }
+
+
+
+
   async cerrarModal() {
     await this.modalController.dismiss();
   }
