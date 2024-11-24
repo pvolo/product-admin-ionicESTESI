@@ -163,7 +163,6 @@ export class FirebaseService {
 
   //==== Obtener los productos de un usuario específico
   getUserProducts(uid: string) {
-    // Obtenemos los productos de la subcolección de un usuario
     const productsRef = collection(getFirestore(), `users/${uid}/products`);
     const productsQuery = query(productsRef, orderBy('soldUnits', 'desc'));
     
@@ -171,11 +170,35 @@ export class FirebaseService {
   }
 
 
-// Método para actualizar los asientos vendidos de un producto
-updateProductSoldUnits(uid: string, productId: string, soldUnits: number) {
+// Método para actualizar los asientos vendidos (soldUnits) de un producto
+updateProductSoldUnits(uid: string, productId: string, reservedSeats: number) {
   const productRef = doc(getFirestore(), `users/${uid}/products/${productId}`);
-  return updateDoc(productRef, { soldUnits });
+
+  return getDoc(productRef).then(docSnapshot => {
+    if (docSnapshot.exists()) {
+      const productData = docSnapshot.data();
+
+      const currentSoldUnits = productData && typeof productData["soldUnits"] === 'number' 
+        ? productData["soldUnits"] 
+        : 0;
+
+      const newSoldUnits = currentSoldUnits - reservedSeats;
+
+      return updateDoc(productRef, {
+        soldUnits: newSoldUnits
+      });
+    } else {
+      console.error('El producto no existe');
+      return Promise.reject('El producto no existe');
+    }
+  }).catch(error => {
+    console.error('Error actualizando soldUnits:', error);
+    return Promise.reject(error);
+  });
 }
+
+
+
 
 
 
@@ -283,6 +306,9 @@ async deleteRequest(uid: string, productId: string, requestId: string) {
   await requestRef.delete();
   console.log('Solicitud con ID', requestId, 'eliminada correctamente');
 }
+
+
+
 
 
 

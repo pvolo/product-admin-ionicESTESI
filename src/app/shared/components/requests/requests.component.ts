@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FirebaseService } from 'src/app/services/firebase.service';
 import { UtilsService } from 'src/app/services/utils.service';
-import { Router } from '@angular/router';  // Importar Router
+import { Router } from '@angular/router';  
 
 @Component({
   selector: 'app-requests',
@@ -36,16 +36,20 @@ export class RequestsComponent implements OnInit {
     const request = this.requests.find(req => req.id === requestId);
     if (request) {
       if (action === 'accept') {
+        await this.firebaseSvc.updateProductSoldUnits(uid, productId, request.reservedSeats);
+        
         await this.firebaseSvc.addToReservados(uid, productId, request);
+        
         await this.firebaseSvc.deleteRequest(uid, productId, requestId);  
+  
         this.utilsSvc.presentToast({
           message: 'Solicitud aceptada y reservada',
           color: 'success',
           duration: 2000
         });
       } else if (action === 'reject') {
-        console.log(`Rechazando solicitud: ${uid}, ${productId}, ${requestId}`);
         await this.firebaseSvc.deleteRequest(uid, productId, requestId);  
+  
         this.utilsSvc.presentToast({
           message: 'Solicitud rechazada',
           color: 'danger',
@@ -56,6 +60,6 @@ export class RequestsComponent implements OnInit {
   }
 
   goToHome() {
-    this.router.navigateByUrl('/main/home');  // Redirigir a la ruta /main/home
+    this.router.navigateByUrl('/main/home'); 
   }
 }
