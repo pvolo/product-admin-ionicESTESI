@@ -12,6 +12,7 @@
         <p>Asientos Reservados: {{ reservation.reservedSeats }}</p>
         <p>Fecha de Reserva: {{ reservation.reservationDate | date }}</p>
         <p>Nombre Ruta: {{ reservation.productCreatorNameRuta }}</p>
+        <ion-button expand="full" (click)="openChat(reservation)" color="secondary">Abrir Chat</ion-button>
       </ion-label>
     </ion-item>
   </ion-list>

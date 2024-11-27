@@ -2,6 +2,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { FirebaseService } from 'src/app/services/firebase.service';
+import { ChatComponent } from '../chat/chat.component';
 
 @Component({
   selector: 'app-verreservados',
@@ -10,6 +11,7 @@ import { FirebaseService } from 'src/app/services/firebase.service';
 })
 export class VerReservadosComponent implements OnInit {
   reservados: any[] = [];
+  @Input() userUid: string = '';
   @Input() productCreatorUid: string = '';
 
   constructor(
@@ -36,4 +38,22 @@ export class VerReservadosComponent implements OnInit {
   close() {
     this.modalCtrl.dismiss();
   }
+
+
+
+  openChat(reservation: any) {
+    this.modalCtrl
+      .create({
+        component: ChatComponent,
+        componentProps: {
+          userUid: reservation.userUid,  // UID del usuario que reservó
+          productCreatorUid: reservation.productCreatorUid,  // UID del conductor que aceptó la reserva
+          productCreatorName: reservation.productCreatorName,  // Nombre del conductor
+          isSenderUser: false,  // El conductor está enviando el mensaje
+        },
+      })
+      .then((modal) => modal.present());
+  }
+  
+
 }
