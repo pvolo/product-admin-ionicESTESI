@@ -103,14 +103,22 @@ export class TakecarPage implements OnInit {
 
 
   get filteredProducts(): Product[] {
-    return this.products.filter(p => 
-      p.userUid !== this.user()?.uid && 
-      p.estadoViaje !== 'Finalizado' && 
-      p.estadoViaje !== 'En Camino' && 
-      this.isValidPatente(p.patente)&& 
-      p.soldUnits !== 0  
-
-      
-    );
+    const seen = new Set();
+    
+    return this.products.filter(p => {
+      // Filtra los productos según las condiciones
+      const isValidProduct = p.userUid !== this.user()?.uid &&
+                             p.estadoViaje !== 'Finalizado' &&
+                             p.estadoViaje !== 'En Camino' &&
+                             this.isValidPatente(p.patente) &&
+                             p.soldUnits !== 0;
+  
+      // Si el producto es válido y aún no ha sido visto, se incluye
+      if (isValidProduct && !seen.has(p.id)) {  // Suponiendo que `id` es el identificador único del producto
+        seen.add(p.id);
+        return true;
+      }
+      return false;
+    });
   }
 }

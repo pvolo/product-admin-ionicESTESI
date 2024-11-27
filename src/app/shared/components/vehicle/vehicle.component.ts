@@ -19,9 +19,9 @@ export class VehicleComponent {
 
   ) {
     this.vehicleForm = this.fb.group({
-      matricula: ['', [Validators.required,Validators.minLength(7),
-        Validators.maxLength(7),
-        Validators.pattern('^[A-Za-z0-9]{7}$')]],
+      matricula: ['', [Validators.required,Validators.minLength(6),
+        Validators.maxLength(6),
+        Validators.pattern('^[A-Za-z0-9]{6}$')]],
       nameCar: ['', [Validators.required]],
     });
   }

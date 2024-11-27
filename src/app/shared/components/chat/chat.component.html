@@ -1,14 +1,13 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>Chat con {{ productCreatorName }}</ion-title>
-  </ion-toolbar>
-</ion-header>
+<app-header [isModal]="true" title="Chat"></app-header>
 
 <ion-content>
   <ion-list>
     <ion-item *ngFor="let message of messages$ | async">
       <ion-label>
-        <strong>{{ message.senderUid === userUid ? 'Tú' : productCreatorName }}:</strong>
+        <strong>
+          <!-- Si el mensaje lo envió el usuario, mostrar su nombre. Si el mensaje lo envió el conductor, mostrar el nombre del conductor -->
+          {{ message.senderUid === userUid ? 'Reservante' : (message.senderUid === productCreatorUid ? productCreatorName : 'Otro') }}:
+        </strong>
         <p>{{ message.text }}</p>
       </ion-label>
     </ion-item>
@@ -23,8 +22,5 @@
       ></ion-input>
       <ion-button (click)="sendMessage()" [disabled]="!messageText.trim()" color="secondary">Enviar</ion-button>
     </ion-item>
-
-    <!-- Botón para salir del chat -->
-    <ion-button expand="full" color="warning" (click)="closeChat()">Salir del Chat</ion-button>
   </ion-footer>
 </ion-content>

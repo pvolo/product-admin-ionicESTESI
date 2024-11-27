@@ -44,11 +44,13 @@ export class ReservationsModalComponent implements OnInit {
       .create({
         component: ChatComponent,
         componentProps: {
-          userUid: this.userUid, // ID del usuario que reservó
-          productCreatorUid: reservation.productCreatorUid, // ID del conductor
-          productCreatorName: reservation.productCreatorName, // Nombre del conductor
+          userUid: reservation.userUid,  // UID del usuario que hizo la reserva
+          productCreatorUid: reservation.productCreatorUid,  // UID del creador del producto/viaje
+          productCreatorName: reservation.productCreatorName,  // Nombre del conductor
+          isSenderUser: true,  // El usuario que reservó está enviando el mensaje
         },
       })
       .then((modal) => modal.present());
   }
+  
 }
