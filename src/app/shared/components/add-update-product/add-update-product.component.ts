@@ -5,8 +5,9 @@ import { User } from 'src/app/models/user.model';
 import { FirebaseService } from 'src/app/services/firebase.service';
 import { UtilsService } from 'src/app/services/utils.service';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { ModalController } from '@ionic/angular';
+import { VehicleService } from 'src/app/services/vehicle.service';
 
 @Component({
   selector: 'app-add-update-product',
@@ -15,6 +16,7 @@ import { ModalController } from '@ionic/angular';
 })
 export class AddUpdateProductComponent implements OnInit {
   @Input() product: Product;
+  vehicles$!: Observable<any[]>;
   constructor(
     private modalController: ModalController
   ){}
@@ -31,6 +33,8 @@ export class AddUpdateProductComponent implements OnInit {
     nombreRuta: new FormControl('', [Validators.required]),
     estadoViaje: new FormControl('', [Validators.required]) 
   });
+
+  private vehicleService = inject(VehicleService); 
 
   firebaseSvc = inject(FirebaseService);
   utilsSvc = inject(UtilsService);
@@ -53,9 +57,12 @@ export class AddUpdateProductComponent implements OnInit {
         nombreRuta: this.product.nombreRuta,
         estadoViaje: this.product.estadoViaje || ''
       });
+
+      
     }
     
     this.loadUbicaciones();
+    this.loadVehicles();
   }
 
   loadUbicaciones() {
@@ -171,4 +178,18 @@ export class AddUpdateProductComponent implements OnInit {
   async cerrarModal() {
     await this.modalController.dismiss();
   }
+
+
+  loadVehicles() {
+    const userId = this.user?.uid; // Firebase usa 'uid' para el ID del usuario
+    if (userId) {
+      this.vehicles$ = this.vehicleService.getVehiclesByUser(userId);
+    } else {
+      this.vehicles$ = of([]); // No carga vehículos si no hay userId
+    }
+  }
+
+
+
+
 }

@@ -36,8 +36,17 @@ export class RequestsComponent implements OnInit {
     const request = this.requests.find(req => req.id === requestId);
     if (request) {
       if (action === 'accept') {
-        await this.firebaseSvc.updateProductSoldUnits(uid, productId, request.reservedSeats);
         
+        const product = this.selectedProduct;  // Esto debe ser un objeto con más información
+      
+        // Asegurarte de que la patente esté disponible
+        const patente = product ? product['patente'] : null;
+  
+        if (patente) {
+          request['patente'] = patente;
+        }
+        await this.firebaseSvc.updateProductSoldUnits(uid, productId, request.reservedSeats);
+
         await this.firebaseSvc.addToReservados(uid, productId, request);
         
         await this.firebaseSvc.deleteRequest(uid, productId, requestId);  
