@@ -73,5 +73,23 @@ export class VehicleService {
   async deleteVehicle(vehicleId: string): Promise<void> {
     await this.firestore.collection('vehicles').doc(vehicleId).delete();
   }
+
+
+
+  getAllVehicles(): Observable<Vehicle[]> {
+    return this.firestore
+      .collection<Vehicle>('vehicles')
+      .valueChanges({ idField: 'id' });
+  }
+
+  getVehiclesByUser(userId: string): Observable<Vehicle[]> {
+    return this.firestore
+      .collection<Vehicle>('vehicles', ref => ref.where('userId', '==', userId))
+      .valueChanges({ idField: 'id' });
+  }
+
+
+
+
   
 }

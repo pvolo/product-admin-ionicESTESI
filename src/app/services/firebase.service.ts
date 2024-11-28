@@ -277,7 +277,8 @@ async addToReservados(userUid: string, productId: string, request: any) {
     productCreatorUid: request.productCreatorUid, 
     productCreatorName: request.productCreatorName, 
     productCreatorNameRuta: request.productCreatorNameRuta,
-    status: 'confirmed',             
+    status: 'confirmed',
+    patente: request.patente || null // Añadir el campo patente             
   });
 }
 

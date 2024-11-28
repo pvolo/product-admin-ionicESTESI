@@ -130,7 +130,8 @@ async reserveSeats() {
       productCreatorUid: this.product.userUid,
       productCreatorName: this.product.userName,
       productCreatorNameRuta: this.product.nombreRuta,   
-      productId: this.product.id,  
+      productId: this.product.id,
+      patente: this.product.patente  
     };
 
     await this.firebaseSvc.addReservationRequest(
