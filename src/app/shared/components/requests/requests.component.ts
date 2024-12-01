@@ -37,9 +37,7 @@ export class RequestsComponent implements OnInit {
     if (request) {
       if (action === 'accept') {
         
-        const product = this.selectedProduct;  // Esto debe ser un objeto con más información
-      
-        // Asegurarte de que la patente esté disponible
+        const product = this.selectedProduct; 
         const patente = product ? product['patente'] : null;
   
         if (patente) {
@@ -51,6 +49,12 @@ export class RequestsComponent implements OnInit {
         
         await this.firebaseSvc.deleteRequest(uid, productId, requestId);  
   
+
+      let userReservations = JSON.parse(localStorage.getItem('userReservations') || '[]');
+      userReservations.push(request);
+      localStorage.setItem('userReservations', JSON.stringify(userReservations));
+
+
         this.utilsSvc.presentToast({
           message: 'Solicitud aceptada y reservada',
           color: 'success',
@@ -68,6 +72,16 @@ export class RequestsComponent implements OnInit {
     }
   }
 
+
+
+
+
+
+
+
+
+
+  
   goToHome() {
     this.router.navigateByUrl('/main/home'); 
   }

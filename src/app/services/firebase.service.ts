@@ -161,13 +161,7 @@ export class FirebaseService {
      // Devuelve los usuarios
   }
 
-  //==== Obtener los productos de un usuario específico
-  getUserProducts(uid: string) {
-    const productsRef = collection(getFirestore(), `users/${uid}/products`);
-    const productsQuery = query(productsRef, orderBy('soldUnits', 'desc'));
-    
-    return collectionData(productsQuery, { idField: 'id' });
-  }
+
 
 
 // Método para actualizar los asientos vendidos (soldUnits) de un producto
@@ -322,6 +316,38 @@ getReservationsForConductor(conductorUid: string): Observable<any[]> {
     })
   );
 }
+
+  // ====== Obtener los productos de un usuario específico y almacenarlos en el LocalStorage
+  getUserProducts(uid: string): Observable<any[]> {
+    const productsRef = collection(getFirestore(), `users/${uid}/products`);
+    const productsQuery = query(productsRef, orderBy('soldUnits', 'desc'));
+
+    const products$ = collectionData(productsQuery, { idField: 'id' });
+
+    products$.subscribe(products => {
+      this.saveProductsInLocalStorage(uid, products);
+    });
+
+    return products$;
+  }
+
+  // Guardar productos en LocalStorage
+  saveProductsInLocalStorage(uid: string, products: any[]): void {
+    localStorage.setItem(`products_${uid}`, JSON.stringify(products));
+  }
+
+  // Obtener productos desde LocalStorage
+  getProductsFromLocalStorage(uid: string): any[] {
+    const products = localStorage.getItem(`products_${uid}`);
+    return products ? JSON.parse(products) : [];
+  }
+
+
+
+
+
+
+
 
 }
 

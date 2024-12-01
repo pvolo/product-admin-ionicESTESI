@@ -56,16 +56,23 @@ return this.products.reduce((index,product)=>index + product.price * product.sol
   getProducts() {
     const path = `users/${this.user().uid}/products`;
     this.loading = true;
-  
-    const query = [
-      orderBy('soldUnits', 'desc')
-    ];
-  
+
+    const query = [orderBy('soldUnits', 'desc')];
+
     const sub = this.fireBaseSvs.getCollectionData(path, query).subscribe({
       next: (res: any) => {
         this.products = res;
+        this.fireBaseSvs.saveProductsInLocalStorage(this.user().uid, res);
         this.loading = false;
         sub.unsubscribe();
+      },
+      error: () => {
+        this.loading = false;
+        this.utilsSvc.presentToast({
+          message: 'No se pudo cargar los datos de Firestore, mostrando datos locales.',
+          duration: 2000,
+          color: 'warning',
+        });
       }
     });
   }

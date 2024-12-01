@@ -17,21 +17,29 @@ export class ReservationsModalComponent implements OnInit {
     private firebaseSvc: FirebaseService
   ) {}
 
-  async ngOnInit() {
-    if (this.userUid) {
+async ngOnInit() {
+  if (this.userUid) {
+    const storedReservations = localStorage.getItem('userReservations');
+    if (storedReservations) {
+      this.reservados = JSON.parse(storedReservations);
+      console.log('Reservaciones cargadas desde localStorage:', this.reservados);
+    } else {
       this.firebaseSvc.getUserReservations(this.userUid).subscribe(
         (reservados) => {
           console.log('Reservaciones obtenidas:', reservados);
           this.reservados = reservados;
+
+          localStorage.setItem('userReservations', JSON.stringify(reservados));
         },
         (error) => {
           console.error('Error al obtener las reservaciones:', error);
         }
       );
-    } else {
-      console.error('No se pudo obtener el UID del usuario');
     }
+  } else {
+    console.error('No se pudo obtener el UID del usuario');
   }
+}
 
   close() {
     this.modalCtrl.dismiss();
