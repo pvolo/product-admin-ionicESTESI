@@ -21,15 +21,23 @@ export class VerReservadosComponent implements OnInit {
 
   async ngOnInit() {
     if (this.productCreatorUid) {
-      this.firebaseSvc.getReservationsForConductor(this.productCreatorUid).subscribe(
-        (reservados) => {
-          console.log('Reservaciones obtenidas para conductor:', reservados);
-          this.reservados = reservados;
-        },
-        (error) => {
-          console.error('Error al obtener las reservaciones:', error);
-        }
-      );
+      const storedReservations = localStorage.getItem('acceptedReservations');
+      if (storedReservations) {
+        this.reservados = JSON.parse(storedReservations);
+        console.log('Reservas cargadas desde localStorage:', this.reservados);
+      } else {
+        this.firebaseSvc.getReservationsForConductor(this.productCreatorUid).subscribe(
+          (reservados) => {
+            console.log('Reservaciones obtenidas para conductor:', reservados);
+            this.reservados = reservados;
+  
+            localStorage.setItem('acceptedReservations', JSON.stringify(reservados));
+          },
+          (error) => {
+            console.error('Error al obtener las reservaciones:', error);
+          }
+        );
+      }
     } else {
       console.error('No se pudo obtener el UID del conductor');
     }
